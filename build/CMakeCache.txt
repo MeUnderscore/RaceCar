@@ -215,8 +215,11 @@ RaceCar_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 RaceCar_SOURCE_DIR:STATIC=C:/Users/bkimb/Documents/GitHub/RaceCar
 
-//The directory containing a CMake configuration file for SFML.
-SFML_DIR:PATH=SFML_DIR-NOTFOUND
+//No help, variable specified on the command line.
+SFML_DIR:UNINITIALIZED=C:/vcpkg/installed/x64-windows/share/sfml
+
+//Path to a file.
+SFML_DOC_DIR:PATH=SFML_DOC_DIR-NOTFOUND
 
 
 ########################

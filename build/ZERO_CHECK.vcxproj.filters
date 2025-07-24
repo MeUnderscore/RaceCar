@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\42fa82cdf7c40f8d15306b7f86e14e1b\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{E1BFF722-A756-3395-BBB4-99CE125D3617}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -4,13 +4,11 @@ project(RaceCar)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Find SFML
-find_package(SFML COMPONENTS Graphics Window System REQUIRED)
-
 # Add executable
 add_executable(RaceCar src/main.cpp)
 
-# Link SFML libraries
+# Find and link SFML
+find_package(SFML COMPONENTS Graphics Window System REQUIRED CONFIG)
 target_link_libraries(RaceCar PRIVATE 
     SFML::Graphics 
     SFML::Window 
