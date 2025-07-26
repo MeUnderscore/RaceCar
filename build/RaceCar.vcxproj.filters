@@ -4,6 +4,21 @@
     <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\Background\Background.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\Track\track.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\BezierCurve\BezierCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\BezierShape\BezierShape.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\Car\Car.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\bkimb\Documents\GitHub\RaceCar\CMakeLists.txt" />

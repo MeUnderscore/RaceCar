@@ -1,0 +1,10 @@
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\sfml-graphics-3.dll
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\sfml-window-3.dll
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\sfml-system-3.dll
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\freetype.dll
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\zlib1.dll
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\bz2.dll
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\libpng16.dll
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\brotlidec.dll
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\brotlicommon.dll
+C:\Users\bkimb\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\RaceCar.vcxproj.Up2Date

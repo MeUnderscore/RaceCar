@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add executable
-add_executable(RaceCar src/main.cpp)
+add_executable(RaceCar src/main.cpp src/Background/Background.cpp src/Track/track.cpp src/BezierCurve/BezierCurve.cpp src/BezierShape/BezierShape.cpp src/Car/Car.cpp)
 
 # Find and link SFML
 find_package(SFML COMPONENTS Graphics Window System REQUIRED CONFIG)
