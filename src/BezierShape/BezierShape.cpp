@@ -144,7 +144,7 @@ void BezierShape::generateSegments()
         // Make first and last rectangles red, others use the normal color
         if (i == 0 || i == points.size() - 2)
         {
-            segment.setFillColor(sf::Color::Red);
+            segment.setFillColor(color);
         }
         else
         {

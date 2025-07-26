@@ -10,8 +10,8 @@ void Background::draw(sf::RenderWindow &window)
 {
     // Clear with dark grey background
     window.clear(sf::Color(64, 64, 64)); // Dark grey
-    
-    
+
+
 
     // Draw the grid pattern
     sf::RectangleShape line;
