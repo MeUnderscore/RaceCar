@@ -33,4 +33,10 @@ public:
 
     // Draw the checkered flag at the start line
     void drawCheckeredFlag(sf::RenderWindow &window);
+
+    // Draw red circles at Bezier curve points for debugging
+    void drawBezierPoints(sf::RenderWindow &window);
+
+    // Draw black circles at track edges
+    void drawTrackEdges(sf::RenderWindow &window);
 };

@@ -15,6 +15,64 @@ void BezierShape::draw(sf::RenderWindow &window) const
     }
 }
 
+void BezierShape::drawEdgeCircles(sf::RenderWindow &window) const
+{
+    // Create a small black circle
+    sf::CircleShape circle;
+    circle.setRadius(3.0f);
+    circle.setFillColor(sf::Color::Black);
+    circle.setOrigin({3.0f, 3.0f}); // Center the origin
+
+    // Draw circles at each end of every 10th rectangle
+    for (size_t i = 0; i < segments.size(); ++i)
+    {
+        if (i % 5 != 0)
+            continue;
+        const auto &segment = segments[i];
+        // Get the rectangle's position and size
+        sf::Vector2f pos = segment.getPosition();
+        sf::Vector2f size = segment.getSize();
+        float rotation = segment.getRotation().asRadians();
+
+        // Calculate the four corners of the rectangle
+        float cosRot = std::cos(rotation);
+        float sinRot = std::sin(rotation);
+
+        // Top-left corner
+        sf::Vector2f topLeft = pos + sf::Vector2f(
+                                         -size.x / 2.0f * cosRot - size.y / 2.0f * sinRot,
+                                         -size.x / 2.0f * sinRot + size.y / 2.0f * cosRot);
+
+        // Top-right corner
+        sf::Vector2f topRight = pos + sf::Vector2f(
+                                          size.x / 2.0f * cosRot - size.y / 2.0f * sinRot,
+                                          size.x / 2.0f * sinRot + size.y / 2.0f * cosRot);
+
+        // Bottom-left corner
+        sf::Vector2f bottomLeft = pos + sf::Vector2f(
+                                            -size.x / 2.0f * cosRot + size.y / 2.0f * sinRot,
+                                            -size.x / 2.0f * sinRot - size.y / 2.0f * cosRot);
+
+        // Bottom-right corner
+        sf::Vector2f bottomRight = pos + sf::Vector2f(
+                                             size.x / 2.0f * cosRot + size.y / 2.0f * sinRot,
+                                             size.x / 2.0f * sinRot - size.y / 2.0f * cosRot);
+
+        // Draw circles at all four corners
+        circle.setPosition(topLeft);
+        window.draw(circle);
+
+        circle.setPosition(topRight);
+        window.draw(circle);
+
+        circle.setPosition(bottomLeft);
+        window.draw(circle);
+
+        circle.setPosition(bottomRight);
+        window.draw(circle);
+    }
+}
+
 sf::Vector2f BezierShape::getStartTangent() const
 {
     // Create a temporary BezierCurve to get the tangent at t=0
@@ -37,6 +95,11 @@ sf::Vector2f BezierShape::getStartPoint() const
 sf::Vector2f BezierShape::getEndPoint() const
 {
     return endPoint;
+}
+
+sf::Vector2f BezierShape::getControlPoint() const
+{
+    return controlPoint;
 }
 
 void BezierShape::generateSegments()
@@ -71,7 +134,7 @@ void BezierShape::generateSegments()
 
         // Calculate segment position (center of the segment)
         sf::Vector2f segmentCenter = currentPoint;
-        segment.setPosition({segmentCenter.x - segmentLength / 2.0f, segmentCenter.y - width / 2.0f});
+        segment.setPosition({segmentCenter.x, segmentCenter.y});
 
         // Calculate rotation angle
         float angle = std::atan2(tangent.y, tangent.x) * 180.0f / 3.14159f;
@@ -81,7 +144,7 @@ void BezierShape::generateSegments()
         // Make first and last rectangles red, others use the normal color
         if (i == 0 || i == points.size() - 2)
         {
-            segment.setFillColor(color);
+            segment.setFillColor(sf::Color::Red);
         }
         else
         {

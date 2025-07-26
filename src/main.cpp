@@ -24,8 +24,7 @@ int main()
     Track track(windowWidth, windowHeight);
 
     // Create car at the track's start position (checkered flag)
-    sf::Vector2f startPos = track.getStartPosition();
-    Car car(startPos.x, startPos.y);
+    Car car(350.0f, 230.0f);
 
     while (window->isOpen())
     {
@@ -69,6 +68,12 @@ int main()
 
         // Draw checkered flag at start line
         track.drawCheckeredFlag(*window);
+
+        // // Draw red circles at Bezier curve points for debugging
+        // track.drawBezierPoints(*window);
+
+        // Draw black circles at track edges
+        track.drawTrackEdges(*window);
 
         // Handle car input and update
         car.handleInput();

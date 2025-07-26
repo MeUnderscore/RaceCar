@@ -20,6 +20,9 @@ public:
     // Draw the shape
     void draw(sf::RenderWindow &window) const;
 
+    // Draw black circles at the edges of each rectangle
+    void drawEdgeCircles(sf::RenderWindow &window) const;
+
     // Get the tangent at the start of the curve
     sf::Vector2f getStartTangent() const;
 
@@ -31,6 +34,9 @@ public:
 
     // Get the end point of the curve
     sf::Vector2f getEndPoint() const;
+
+    // Get the control point of the curve
+    sf::Vector2f getControlPoint() const;
 
 private:
     // Generate the segments from the Bezier curve
