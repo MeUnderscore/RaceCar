@@ -23,12 +23,14 @@ void BezierShape::drawEdgeCircles(sf::RenderWindow &window) const
     circle.setFillColor(sf::Color::Black);
     circle.setOrigin({3.0f, 3.0f}); // Center the origin
 
-    // Draw circles at each end of every 10th rectangle
+    // Draw circles at each end of every 5th rectangle
     for (size_t i = 0; i < segments.size(); ++i)
     {
         if (i % 5 != 0)
             continue;
+
         const auto &segment = segments[i];
+
         // Get the rectangle's position and size
         sf::Vector2f pos = segment.getPosition();
         sf::Vector2f size = segment.getSize();
@@ -58,19 +60,58 @@ void BezierShape::drawEdgeCircles(sf::RenderWindow &window) const
                                              size.x / 2.0f * cosRot + size.y / 2.0f * sinRot,
                                              size.x / 2.0f * sinRot - size.y / 2.0f * cosRot);
 
-        // Draw circles at all four corners
+        // Draw circles at the four corners
         circle.setPosition(topLeft);
         window.draw(circle);
-
         circle.setPosition(topRight);
         window.draw(circle);
-
         circle.setPosition(bottomLeft);
         window.draw(circle);
-
         circle.setPosition(bottomRight);
         window.draw(circle);
     }
+}
+
+std::vector<sf::Vector2f> BezierShape::getEdgePoints() const
+{
+    std::vector<sf::Vector2f> edgePoints;
+    for (const auto &segment : segments)
+    {
+        // Get the rectangle's position and size
+        sf::Vector2f pos = segment.getPosition();
+        sf::Vector2f size = segment.getSize();
+        float rotation = segment.getRotation().asRadians();
+
+        // Calculate the four corners of the rectangle
+        float cosRot = std::cos(rotation);
+        float sinRot = std::sin(rotation);
+
+        // Top-left corner
+        sf::Vector2f topLeft = pos + sf::Vector2f(
+                                         -size.x / 2.0f * cosRot - size.y / 2.0f * sinRot,
+                                         -size.x / 2.0f * sinRot + size.y / 2.0f * cosRot);
+
+        // Top-right corner
+        sf::Vector2f topRight = pos + sf::Vector2f(
+                                          size.x / 2.0f * cosRot - size.y / 2.0f * sinRot,
+                                          size.x / 2.0f * sinRot + size.y / 2.0f * cosRot);
+
+        // Bottom-left corner
+        sf::Vector2f bottomLeft = pos + sf::Vector2f(
+                                            -size.x / 2.0f * cosRot + size.y / 2.0f * sinRot,
+                                            -size.x / 2.0f * sinRot - size.y / 2.0f * cosRot);
+
+        // Bottom-right corner
+        sf::Vector2f bottomRight = pos + sf::Vector2f(
+                                             size.x / 2.0f * cosRot + size.y / 2.0f * sinRot,
+                                             size.x / 2.0f * sinRot - size.y / 2.0f * cosRot);
+
+        edgePoints.push_back(topLeft);
+        edgePoints.push_back(topRight);
+        edgePoints.push_back(bottomLeft);
+        edgePoints.push_back(bottomRight);
+    }
+    return edgePoints;
 }
 
 sf::Vector2f BezierShape::getStartTangent() const

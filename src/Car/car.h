@@ -1,7 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
-class Car {
+class Car
+{
 private:
     sf::RectangleShape carShape;
     float speed;
@@ -16,16 +17,17 @@ private:
 
 public:
     Car(float startX, float startY, float carWidth = 20.0f, float carHeight = 10.0f);
-    
-    void draw(sf::RenderWindow& window);
+
+    void draw(sf::RenderWindow &window);
     void update(float deltaTime);
     void handleInput();
-    
+    void handleCollision(const std::vector<sf::Vector2f> &edgePoints);
+
     // Getters for position and angle
     float getX() const { return x; }
     float getY() const { return y; }
     float getAngle() const { return angle; }
-    
+
     // Setters for position
     void setPosition(float newX, float newY);
 };

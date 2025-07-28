@@ -38,6 +38,9 @@ public:
     // Get the control point of the curve
     sf::Vector2f getControlPoint() const;
 
+    // Get edge points of the curve
+    std::vector<sf::Vector2f> getEdgePoints() const;
+
 private:
     // Generate the segments from the Bezier curve
     void generateSegments();

@@ -1,31 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\main.cpp">
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\Background\Background.cpp">
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Background\Background.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\Track\track.cpp">
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Track\track.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\BezierCurve\BezierCurve.cpp">
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\BezierCurve\BezierCurve.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\BezierShape\BezierShape.cpp">
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\BezierShape\BezierShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\Car\Car.cpp">
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\Car.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\bkimb\Documents\GitHub\RaceCar\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{5CDA01E4-1A5C-3BFB-B654-D829AE4FEFC4}</UniqueIdentifier>
+      <UniqueIdentifier>{62C22016-FC8E-3773-91DD-8E3A3D69CD28}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

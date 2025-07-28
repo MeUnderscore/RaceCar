@@ -229,3 +229,17 @@ void Track::drawTrackEdges(sf::RenderWindow &window)
         shape.drawEdgeCircles(window);
     }
 }
+
+std::vector<sf::Vector2f> Track::getAllEdgePoints() const
+{
+    std::vector<sf::Vector2f> allEdgePoints;
+
+    // Collect edge points from all track shapes
+    for (const auto &shape : trackShapes)
+    {
+        std::vector<sf::Vector2f> shapeEdgePoints = shape.getEdgePoints();
+        allEdgePoints.insert(allEdgePoints.end(), shapeEdgePoints.begin(), shapeEdgePoints.end());
+    }
+
+    return allEdgePoints;
+}

@@ -22,9 +22,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{F33BCEC9-1A0A-3BAB-AD96-C9B34DBAA49C}</ProjectGuid>
+    <ProjectGuid>{24EF78EF-E5F0-32EF-B82B-42817FB8A64D}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
+    <VcpkgEnabled>false</VcpkgEnabled>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
     <Platform>x64</Platform>
     <ProjectName>RaceCar</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
@@ -54,30 +55,30 @@
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
   <ImportGroup Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="do_not_import_user.props" Condition="exists('do_not_import_user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\bkimb\Documents\GitHub\RaceCar\build\Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">RaceCar.dir\Debug\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">RaceCar</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\bkimb\Documents\GitHub\RaceCar\build\Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\Release\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">RaceCar.dir\Release\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">RaceCar</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\bkimb\Documents\GitHub\RaceCar\build\MinSizeRel\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\MinSizeRel\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">RaceCar.dir\MinSizeRel\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">RaceCar</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
     <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\bkimb\Documents\GitHub\RaceCar\build\RelWithDebInfo\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RelWithDebInfo\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">RaceCar.dir\RelWithDebInfo\</IntDir>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">RaceCar</TargetName>
     <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
@@ -86,24 +87,21 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/vcpkg/installed/x64-windows/include"</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/include"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
-      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
       <Optimization>Disabled</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <SupportJustMyCode></SupportJustMyCode>
-      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
       <UseFullPaths>false</UseFullPaths>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -111,10 +109,10 @@
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -122,9 +120,18 @@
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message></Message>
+      <Message>	</Message>
       <Command>setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/vcpkg/installed/x64-windows/debug/bin/sfml-graphics-d-3.dll C:/vcpkg/installed/x64-windows/debug/bin/sfml-window-d-3.dll C:/vcpkg/installed/x64-windows/debug/bin/sfml-system-d-3.dll C:/Users/bkimb/Documents/GitHub/RaceCar/build/Debug
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/Debug/RaceCar.exe -installedDir C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/debug/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/debug/bin/sfml-graphics-d-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/debug/bin/sfml-window-d-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/debug/bin/sfml-system-d-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/Debug
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -134,17 +141,13 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>C:\vcpkg\installed\x64-windows\debug\lib\sfml-graphics-d.lib;C:\vcpkg\installed\x64-windows\debug\lib\sfml-window-d.lib;C:\vcpkg\installed\x64-windows\debug\lib\sfml-system-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\debug\lib\sfml-graphics-d.lib;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\debug\lib\sfml-window-d.lib;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\debug\lib\sfml-system-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <DataExecutionPrevention></DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
-      <ImportLibrary>C:/Users/bkimb/Documents/GitHub/RaceCar/build/Debug/RaceCar.lib</ImportLibrary>
-      <LinkErrorReporting></LinkErrorReporting>
-      <ProgramDataBaseFile>C:/Users/bkimb/Documents/GitHub/RaceCar/build/Debug/RaceCar.pdb</ProgramDataBaseFile>
-      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <ImportLibrary>C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/Debug/RaceCar.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/Debug/RaceCar.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -153,23 +156,20 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/vcpkg/installed/x64-windows/include"</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/include"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
-      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
       <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <SupportJustMyCode></SupportJustMyCode>
-      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
       <UseFullPaths>false</UseFullPaths>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -179,10 +179,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -190,9 +190,18 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message></Message>
+      <Message>	</Message>
       <Command>setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/vcpkg/installed/x64-windows/bin/sfml-graphics-3.dll C:/vcpkg/installed/x64-windows/bin/sfml-window-3.dll C:/vcpkg/installed/x64-windows/bin/sfml-system-3.dll C:/Users/bkimb/Documents/GitHub/RaceCar/build/Release
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/Release/RaceCar.exe -installedDir C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin/sfml-graphics-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin/sfml-window-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin/sfml-system-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/Release
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -202,17 +211,13 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>C:\vcpkg\installed\x64-windows\lib\sfml-graphics.lib;C:\vcpkg\installed\x64-windows\lib\sfml-window.lib;C:\vcpkg\installed\x64-windows\lib\sfml-system.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\lib\sfml-graphics.lib;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\lib\sfml-window.lib;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\lib\sfml-system.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <DataExecutionPrevention></DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
-      <ImportLibrary>C:/Users/bkimb/Documents/GitHub/RaceCar/build/Release/RaceCar.lib</ImportLibrary>
-      <LinkErrorReporting></LinkErrorReporting>
-      <ProgramDataBaseFile>C:/Users/bkimb/Documents/GitHub/RaceCar/build/Release/RaceCar.pdb</ProgramDataBaseFile>
-      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <ImportLibrary>C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/Release/RaceCar.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/Release/RaceCar.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -221,23 +226,20 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/vcpkg/installed/x64-windows/include"</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/include"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
-      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
       <Optimization>MinSpace</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <SupportJustMyCode></SupportJustMyCode>
-      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
       <UseFullPaths>false</UseFullPaths>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -247,10 +249,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -258,9 +260,18 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message></Message>
+      <Message>	</Message>
       <Command>setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/vcpkg/installed/x64-windows/debug/bin/sfml-graphics-d-3.dll C:/vcpkg/installed/x64-windows/debug/bin/sfml-window-d-3.dll C:/vcpkg/installed/x64-windows/debug/bin/sfml-system-d-3.dll C:/Users/bkimb/Documents/GitHub/RaceCar/build/MinSizeRel
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/MinSizeRel/RaceCar.exe -installedDir C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin/sfml-graphics-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin/sfml-window-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin/sfml-system-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/MinSizeRel
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -270,17 +281,13 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>C:\vcpkg\installed\x64-windows\debug\lib\sfml-graphics-d.lib;C:\vcpkg\installed\x64-windows\debug\lib\sfml-window-d.lib;C:\vcpkg\installed\x64-windows\debug\lib\sfml-system-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\lib\sfml-graphics.lib;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\lib\sfml-window.lib;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\lib\sfml-system.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <DataExecutionPrevention></DataExecutionPrevention>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
-      <ImportLibrary>C:/Users/bkimb/Documents/GitHub/RaceCar/build/MinSizeRel/RaceCar.lib</ImportLibrary>
-      <LinkErrorReporting></LinkErrorReporting>
-      <ProgramDataBaseFile>C:/Users/bkimb/Documents/GitHub/RaceCar/build/MinSizeRel/RaceCar.pdb</ProgramDataBaseFile>
-      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <ImportLibrary>C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/MinSizeRel/RaceCar.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/MinSizeRel/RaceCar.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -289,24 +296,21 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
     <ClCompile>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/vcpkg/installed/x64-windows/include"</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /external:I "C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/include"</AdditionalOptions>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <ExceptionHandling>Sync</ExceptionHandling>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
-      <ForceConformanceInForLoopScope></ForceConformanceInForLoopScope>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MinimalRebuild></MinimalRebuild>
       <Optimization>MaxSpeed</Optimization>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <RemoveUnreferencedCodeData></RemoveUnreferencedCodeData>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <SupportJustMyCode></SupportJustMyCode>
-      <TreatWChar_tAsBuiltInType></TreatWChar_tAsBuiltInType>
       <UseFullPaths>false</UseFullPaths>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)</ObjectFileName>
@@ -314,10 +318,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <Midl>
-      <AdditionalIncludeDirectories>C:\Users\bkimb\Documents\GitHub\RaceCar\include;C:\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\include;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
       <HeaderFileName>%(Filename).h</HeaderFileName>
       <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
@@ -325,9 +329,18 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
       <ProxyFileName>%(Filename)_p.c</ProxyFileName>
     </Midl>
     <PostBuildEvent>
-      <Message></Message>
+      <Message>	</Message>
       <Command>setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/vcpkg/installed/x64-windows/debug/bin/sfml-graphics-d-3.dll C:/vcpkg/installed/x64-windows/debug/bin/sfml-window-d-3.dll C:/vcpkg/installed/x64-windows/debug/bin/sfml-system-d-3.dll C:/Users/bkimb/Documents/GitHub/RaceCar/build/RelWithDebInfo
+C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noprofile -executionpolicy Bypass -file C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/scripts/buildsystems/msbuild/applocal.ps1 -targetBinary C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/RelWithDebInfo/RaceCar.exe -installedDir C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin -OutVariable out
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -E copy_if_different C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin/sfml-graphics-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin/sfml-window-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/vcpkg/installed/x64-windows/bin/sfml-system-3.dll C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/RelWithDebInfo
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -337,17 +350,13 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
     <Link>
-      <AdditionalDependencies>C:\vcpkg\installed\x64-windows\debug\lib\sfml-graphics-d.lib;C:\vcpkg\installed\x64-windows\debug\lib\sfml-window-d.lib;C:\vcpkg\installed\x64-windows\debug\lib\sfml-system-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\lib\sfml-graphics.lib;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\lib\sfml-window.lib;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\lib\sfml-system.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
-      <DataExecutionPrevention></DataExecutionPrevention>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-      <ImageHasSafeExceptionHandlers></ImageHasSafeExceptionHandlers>
-      <ImportLibrary>C:/Users/bkimb/Documents/GitHub/RaceCar/build/RelWithDebInfo/RaceCar.lib</ImportLibrary>
-      <LinkErrorReporting></LinkErrorReporting>
-      <ProgramDataBaseFile>C:/Users/bkimb/Documents/GitHub/RaceCar/build/RelWithDebInfo/RaceCar.pdb</ProgramDataBaseFile>
-      <RandomizedBaseAddress></RandomizedBaseAddress>
+      <ImportLibrary>C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/RelWithDebInfo/RaceCar.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/RelWithDebInfo/RaceCar.pdb</ProgramDataBaseFile>
       <SubSystem>Console</SubSystem>
     </Link>
     <ProjectReference>
@@ -355,11 +364,11 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ProjectReference>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\bkimb\Documents\GitHub\RaceCar\CMakeLists.txt">
+    <CustomBuild Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\CMakeLists.txt">
       <UseUtf8Encoding>Always</UseUtf8Encoding>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/bkimb/Documents/GitHub/RaceCar/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/bkimb/Documents/GitHub/RaceCar -BC:/Users/bkimb/Documents/GitHub/RaceCar/build --check-stamp-file C:/Users/bkimb/Documents/GitHub/RaceCar/build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar -BC:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build --check-stamp-file C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -367,12 +376,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\WindowsPaths.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeCCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeCXXCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeRCCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeSystem.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLConfig.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLConfigVersion.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\WindowsPaths.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeCCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeCXXCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeRCCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeSystem.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLConfig.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLConfigVersion.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\scripts\buildsystems\vcpkg.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/bkimb/Documents/GitHub/RaceCar/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/bkimb/Documents/GitHub/RaceCar -BC:/Users/bkimb/Documents/GitHub/RaceCar/build --check-stamp-file C:/Users/bkimb/Documents/GitHub/RaceCar/build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar -BC:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build --check-stamp-file C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -380,12 +389,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\WindowsPaths.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeCCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeCXXCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeRCCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeSystem.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLConfig.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLConfigVersion.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\WindowsPaths.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeCCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeCXXCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeRCCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeSystem.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLConfig.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLConfigVersion.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\scripts\buildsystems\vcpkg.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/bkimb/Documents/GitHub/RaceCar/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/bkimb/Documents/GitHub/RaceCar -BC:/Users/bkimb/Documents/GitHub/RaceCar/build --check-stamp-file C:/Users/bkimb/Documents/GitHub/RaceCar/build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar -BC:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build --check-stamp-file C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -393,12 +402,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\WindowsPaths.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeCCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeCXXCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeRCCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeSystem.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLConfig.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLConfigVersion.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\WindowsPaths.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeCCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeCXXCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeRCCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeSystem.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLConfig.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLConfigVersion.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\scripts\buildsystems\vcpkg.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/bkimb/Documents/GitHub/RaceCar/CMakeLists.txt</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/CMakeLists.txt</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/bkimb/Documents/GitHub/RaceCar -BC:/Users/bkimb/Documents/GitHub/RaceCar/build --check-stamp-file C:/Users/bkimb/Documents/GitHub/RaceCar/build/CMakeFiles/generate.stamp
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar -BC:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build --check-stamp-file C:/Users/bkimb/OneDrive/Documents/GitHub/RaceCar/build/CMakeFiles/generate.stamp
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -406,23 +415,23 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.1\Modules\Platform\WindowsPaths.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeCCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeCXXCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeRCCompiler.cmake;C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\4.1.0-rc2\CMakeSystem.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLConfig.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLConfigVersion.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-debug.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-release.cmake;C:\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets.cmake;%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\bkimb\Documents\GitHub\RaceCar\build\CMakeFiles\generate.stamp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeDependentOption.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Linker\MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-Initialize.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-4.0\Modules\Platform\WindowsPaths.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeCCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeCXXCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeRCCompiler.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\4.0.3\CMakeSystem.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLConfig.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLConfigVersion.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLGraphicsSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLSystemSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-debug.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets-release.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\installed\x64-windows\share\sfml\SFMLWindowSharedTargets.cmake;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\vcpkg\scripts\buildsystems\vcpkg.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\CMakeFiles\generate.stamp</Outputs>
       <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\main.cpp" />
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\Background\Background.cpp" />
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\Track\track.cpp" />
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\BezierCurve\BezierCurve.cpp" />
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\BezierShape\BezierShape.cpp" />
-    <ClCompile Include="C:\Users\bkimb\Documents\GitHub\RaceCar\src\Car\Car.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\main.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Background\Background.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Track\track.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\BezierCurve\BezierCurve.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\BezierShape\BezierShape.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\Car.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <ProjectReference Include="C:\Users\bkimb\Documents\GitHub\RaceCar\build\ZERO_CHECK.vcxproj">
-      <Project>{342B4896-5404-372A-BAF6-DC7F46FB2BF0}</Project>
+    <ProjectReference Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\ZERO_CHECK.vcxproj">
+      <Project>{53839DAF-1D5B-372D-B1A0-2AE23BFC4DBD}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

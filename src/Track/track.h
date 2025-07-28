@@ -39,4 +39,7 @@ public:
 
     // Draw black circles at track edges
     void drawTrackEdges(sf::RenderWindow &window);
+
+    // Get all edge points for collision detection
+    std::vector<sf::Vector2f> getAllEdgePoints() const;
 };

@@ -69,15 +69,16 @@ int main()
         // Draw checkered flag at start line
         track.drawCheckeredFlag(*window);
 
-        // // Draw red circles at Bezier curve points for debugging
-        // track.drawBezierPoints(*window);
-
         // Draw black circles at track edges
         track.drawTrackEdges(*window);
 
         // Handle car input and update
         car.handleInput();
         car.update(0.016f); // Assuming 60 FPS
+
+        // Handle collision detection
+        std::vector<sf::Vector2f> edgePoints = track.getAllEdgePoints();
+        car.handleCollision(edgePoints);
 
         // Draw car
         car.draw(*window);
