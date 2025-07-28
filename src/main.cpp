@@ -3,6 +3,8 @@
 #include "Background/Background.h"
 #include "Track/track.h"
 #include "Car/Car.h"
+#include "Timer/Timer.h"
+#include "Checkpoint/CheckpointHandler.h"
 
 using namespace sf;
 using namespace std;
@@ -23,8 +25,18 @@ int main()
     // Create track
     Track track(windowWidth, windowHeight);
 
+    // Save track segment corners to file
+    track.saveTrackSegmentCornersToFile("track_segments.txt");
+
     // Create car at the track's start position (checkered flag)
     Car car(350.0f, 230.0f);
+
+    // Create timer
+    Timer timer;
+
+    // Create checkpoint handler
+    CheckpointHandler checkpointHandler;
+    checkpointHandler.initializeCheckpoints(track.getTrackSegmentCorners());
 
     while (window->isOpen())
     {
@@ -41,6 +53,20 @@ int main()
                 if (keyPressed->scancode == Keyboard::Scancode::Escape)
                 {
                     window->close();
+                }
+                else if (keyPressed->scancode == Keyboard::Scancode::R)
+                {
+                    // Reset car to start position
+                    car.resetPosition();
+                    // Reset timer
+                    timer.reset();
+                    // Reset checkpoints
+                    checkpointHandler.resetAllCheckpoints();
+                }
+                else if (keyPressed->scancode == Keyboard::Scancode::W)
+                {
+                    // Start timer when W is pressed for the first time
+                    timer.start();
                 }
             }
             else if (const auto *resized = event->getIf<Event::Resized>())
@@ -77,11 +103,23 @@ int main()
         car.update(0.016f); // Assuming 60 FPS
 
         // Handle collision detection
-        std::vector<sf::Vector2f> edgePoints = track.getAllEdgePoints();
-        car.handleCollision(edgePoints);
+        std::vector<sf::Vector2f> innerEdgePoints = track.getInnerEdgePoints();
+        std::vector<sf::Vector2f> outerEdgePoints = track.getOuterEdgePoints();
+        car.handleCollision(innerEdgePoints, outerEdgePoints);
+
+        // Check checkpoint collisions
+        checkpointHandler.checkCarPosition(sf::Vector2f(car.getX(), car.getY()));
 
         // Draw car
         car.draw(*window);
+
+        // Update and draw timer
+        timer.update();
+        timer.draw(*window);
+
+        // Draw checkpoints and checkpoint counter
+        checkpointHandler.drawCheckpoints(*window);
+        checkpointHandler.drawCheckpointCounter(*window);
 
         window->display();
     }

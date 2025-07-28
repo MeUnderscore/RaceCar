@@ -42,4 +42,17 @@ public:
 
     // Get all edge points for collision detection
     std::vector<sf::Vector2f> getAllEdgePoints() const;
+
+    // Get inner and outer edge points separately
+    std::vector<sf::Vector2f> getInnerEdgePoints() const;
+    std::vector<sf::Vector2f> getOuterEdgePoints() const;
+
+    // Get checkered flag bounds for collision detection
+    sf::FloatRect getCheckeredFlagBounds() const;
+
+    // Get 4 corner positions of 20 evenly spaced rectangles from each curve segment
+    std::vector<std::vector<sf::Vector2f>> getTrackSegmentCorners() const;
+
+    // Save track segment corners to a text file
+    void saveTrackSegmentCornersToFile(const std::string &filename) const;
 };

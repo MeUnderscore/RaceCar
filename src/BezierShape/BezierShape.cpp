@@ -114,6 +114,70 @@ std::vector<sf::Vector2f> BezierShape::getEdgePoints() const
     return edgePoints;
 }
 
+std::vector<sf::Vector2f> BezierShape::getInnerEdgePoints() const
+{
+    std::vector<sf::Vector2f> innerEdgePoints;
+    for (const auto &segment : segments)
+    {
+        // Get the rectangle's position and size
+        sf::Vector2f pos = segment.getPosition();
+        sf::Vector2f size = segment.getSize();
+        float rotation = segment.getRotation().asRadians();
+
+        // Calculate the four corners of the rectangle
+        float cosRot = std::cos(rotation);
+        float sinRot = std::sin(rotation);
+
+        // For inner edge, we need to determine which corners are "inside" the track
+        // This depends on the curve direction, but for now we'll use the left side
+        // Top-left corner (inner edge)
+        sf::Vector2f topLeft = pos + sf::Vector2f(
+                                         -size.x / 2.0f * cosRot - size.y / 2.0f * sinRot,
+                                         -size.x / 2.0f * sinRot + size.y / 2.0f * cosRot);
+
+        // Bottom-left corner (inner edge)
+        sf::Vector2f bottomLeft = pos + sf::Vector2f(
+                                            -size.x / 2.0f * cosRot + size.y / 2.0f * sinRot,
+                                            -size.x / 2.0f * sinRot - size.y / 2.0f * cosRot);
+
+        innerEdgePoints.push_back(topLeft);
+        innerEdgePoints.push_back(bottomLeft);
+    }
+    return innerEdgePoints;
+}
+
+std::vector<sf::Vector2f> BezierShape::getOuterEdgePoints() const
+{
+    std::vector<sf::Vector2f> outerEdgePoints;
+    for (const auto &segment : segments)
+    {
+        // Get the rectangle's position and size
+        sf::Vector2f pos = segment.getPosition();
+        sf::Vector2f size = segment.getSize();
+        float rotation = segment.getRotation().asRadians();
+
+        // Calculate the four corners of the rectangle
+        float cosRot = std::cos(rotation);
+        float sinRot = std::sin(rotation);
+
+        // For outer edge, we need to determine which corners are "outside" the track
+        // This depends on the curve direction, but for now we'll use the right side
+        // Top-right corner (outer edge)
+        sf::Vector2f topRight = pos + sf::Vector2f(
+                                          size.x / 2.0f * cosRot - size.y / 2.0f * sinRot,
+                                          size.x / 2.0f * sinRot + size.y / 2.0f * cosRot);
+
+        // Bottom-right corner (outer edge)
+        sf::Vector2f bottomRight = pos + sf::Vector2f(
+                                             size.x / 2.0f * cosRot + size.y / 2.0f * sinRot,
+                                             size.x / 2.0f * sinRot - size.y / 2.0f * cosRot);
+
+        outerEdgePoints.push_back(topRight);
+        outerEdgePoints.push_back(bottomRight);
+    }
+    return outerEdgePoints;
+}
+
 sf::Vector2f BezierShape::getStartTangent() const
 {
     // Create a temporary BezierCurve to get the tangent at t=0

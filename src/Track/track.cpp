@@ -1,4 +1,6 @@
 #include "track.h"
+#include <fstream>
+#include <iostream>
 
 Track::Track(unsigned int width, unsigned int height)
     : windowWidth(width), windowHeight(height), trackWidth(100.0f)
@@ -192,6 +194,122 @@ void Track::drawCheckeredFlag(sf::RenderWindow &window)
     }
 }
 
+sf::FloatRect Track::getCheckeredFlagBounds() const
+{
+    if (trackShapes.empty())
+        return sf::FloatRect(sf::Vector2f(350.0f, 220.0f), sf::Vector2f(40.0f, trackWidth));
+
+    // Get the start position and tangent of the first curve
+    sf::Vector2f startPos = trackShapes.front().getStartPoint();
+    sf::Vector2f startTangent = trackShapes.front().getStartTangent();
+
+    // Calculate perpendicular direction for the flag width
+    sf::Vector2f perpendicular(-startTangent.y, startTangent.x);
+
+    // Create bounds for the checkered flag area
+    float squareSize = 20.0f;
+    float flagWidth = trackWidth;
+
+    // Calculate the four corners of the checkered flag area
+    sf::Vector2f topLeft = startPos + startTangent * (-squareSize / 2.0f) + perpendicular * (-flagWidth / 2.0f);
+    sf::Vector2f topRight = startPos + startTangent * (-squareSize / 2.0f) + perpendicular * (flagWidth / 2.0f);
+    sf::Vector2f bottomLeft = startPos + startTangent * (squareSize * 1.5f) + perpendicular * (-flagWidth / 2.0f);
+    sf::Vector2f bottomRight = startPos + startTangent * (squareSize * 1.5f) + perpendicular * (flagWidth / 2.0f);
+
+    // Calculate the bounding rectangle
+    float minX = std::min({topLeft.x, topRight.x, bottomLeft.x, bottomRight.x});
+    float maxX = std::max({topLeft.x, topRight.x, bottomLeft.x, bottomRight.x});
+    float minY = std::min({topLeft.y, topRight.y, bottomLeft.y, bottomRight.y});
+    float maxY = std::max({topLeft.y, topRight.y, bottomLeft.y, bottomRight.y});
+
+    return sf::FloatRect(sf::Vector2f(minX, minY), sf::Vector2f(maxX - minX, maxY - minY));
+}
+
+std::vector<std::vector<sf::Vector2f>> Track::getTrackSegmentCorners() const
+{
+    std::vector<std::vector<sf::Vector2f>> allSegmentCorners;
+
+    for (const auto &shape : trackShapes)
+    {
+        // Get the edge points for this shape
+        std::vector<sf::Vector2f> innerPoints = shape.getInnerEdgePoints();
+        std::vector<sf::Vector2f> outerPoints = shape.getOuterEdgePoints();
+
+        // Calculate how many points to skip to get 20 evenly spaced rectangles
+        int totalPoints = std::min(innerPoints.size(), outerPoints.size());
+        int skipAmount = std::max(1, totalPoints / 20);
+
+        for (int i = 0; i < totalPoints && i < 20 * skipAmount; i += skipAmount)
+        {
+            if (i < innerPoints.size() && i < outerPoints.size())
+            {
+                // Get the current segment points
+                sf::Vector2f innerPoint = innerPoints[i];
+                sf::Vector2f outerPoint = outerPoints[i];
+
+                // Calculate the 4 corners of the rectangle
+                // We need to get the next point to calculate the rectangle width
+                sf::Vector2f nextInnerPoint, nextOuterPoint;
+
+                if (i + skipAmount < innerPoints.size() && i + skipAmount < outerPoints.size())
+                {
+                    nextInnerPoint = innerPoints[i + skipAmount];
+                    nextOuterPoint = outerPoints[i + skipAmount];
+                }
+                else
+                {
+                    // Use the last point if we're at the end
+                    nextInnerPoint = innerPoints.back();
+                    nextOuterPoint = outerPoints.back();
+                }
+
+                // Calculate the 4 corners of the rectangle segment
+                std::vector<sf::Vector2f> segmentCorners;
+                segmentCorners.push_back(innerPoint);     // Top-left
+                segmentCorners.push_back(outerPoint);     // Top-right
+                segmentCorners.push_back(nextInnerPoint); // Bottom-left
+                segmentCorners.push_back(nextOuterPoint); // Bottom-right
+
+                allSegmentCorners.push_back(segmentCorners);
+            }
+        }
+    }
+
+    return allSegmentCorners;
+}
+
+void Track::saveTrackSegmentCornersToFile(const std::string &filename) const
+{
+    std::ofstream file(filename);
+    if (!file.is_open())
+    {
+        std::cout << "Failed to open file: " << filename << std::endl;
+        return;
+    }
+
+    std::vector<std::vector<sf::Vector2f>> segmentCorners = getTrackSegmentCorners();
+
+    file << "Track Segment Corners" << std::endl;
+    file << "Format: Segment_Index Corner_Index X Y" << std::endl;
+    file << "========================" << std::endl;
+
+    for (size_t segmentIndex = 0; segmentIndex < segmentCorners.size(); ++segmentIndex)
+    {
+        const auto &corners = segmentCorners[segmentIndex];
+        file << "Segment " << segmentIndex << ":" << std::endl;
+
+        for (size_t cornerIndex = 0; cornerIndex < corners.size(); ++cornerIndex)
+        {
+            const auto &corner = corners[cornerIndex];
+            file << "  Corner " << cornerIndex << ": (" << corner.x << ", " << corner.y << ")" << std::endl;
+        }
+        file << std::endl;
+    }
+
+    file.close();
+    std::cout << "Track segment corners saved to: " << filename << std::endl;
+}
+
 // void Track::drawBezierPoints(sf::RenderWindow &window)
 // {
 //     // Create a small red circle shape
@@ -242,4 +360,32 @@ std::vector<sf::Vector2f> Track::getAllEdgePoints() const
     }
 
     return allEdgePoints;
+}
+
+std::vector<sf::Vector2f> Track::getInnerEdgePoints() const
+{
+    std::vector<sf::Vector2f> allInnerEdgePoints;
+
+    // Collect inner edge points from all track shapes
+    for (const auto &shape : trackShapes)
+    {
+        std::vector<sf::Vector2f> shapeInnerEdgePoints = shape.getInnerEdgePoints();
+        allInnerEdgePoints.insert(allInnerEdgePoints.end(), shapeInnerEdgePoints.begin(), shapeInnerEdgePoints.end());
+    }
+
+    return allInnerEdgePoints;
+}
+
+std::vector<sf::Vector2f> Track::getOuterEdgePoints() const
+{
+    std::vector<sf::Vector2f> allOuterEdgePoints;
+
+    // Collect outer edge points from all track shapes
+    for (const auto &shape : trackShapes)
+    {
+        std::vector<sf::Vector2f> shapeOuterEdgePoints = shape.getOuterEdgePoints();
+        allOuterEdgePoints.insert(allOuterEdgePoints.end(), shapeOuterEdgePoints.begin(), shapeOuterEdgePoints.end());
+    }
+
+    return allOuterEdgePoints;
 }

@@ -41,6 +41,10 @@ public:
     // Get edge points of the curve
     std::vector<sf::Vector2f> getEdgePoints() const;
 
+    // Get inner and outer edge points separately
+    std::vector<sf::Vector2f> getInnerEdgePoints() const;
+    std::vector<sf::Vector2f> getOuterEdgePoints() const;
+
 private:
     // Generate the segments from the Bezier curve
     void generateSegments();

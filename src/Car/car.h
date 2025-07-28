@@ -1,10 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "CarShape.h"
 
 class Car
 {
 private:
-    sf::RectangleShape carShape;
+    CarShape carShape;
     float speed;
     float velocity;
     float maxSpeed;
@@ -21,7 +22,7 @@ public:
     void draw(sf::RenderWindow &window);
     void update(float deltaTime);
     void handleInput();
-    void handleCollision(const std::vector<sf::Vector2f> &edgePoints);
+    void handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, const std::vector<sf::Vector2f> &outerEdgePoints);
 
     // Getters for position and angle
     float getX() const { return x; }
@@ -30,4 +31,10 @@ public:
 
     // Setters for position
     void setPosition(float newX, float newY);
+
+    // Reset car to start position
+    void resetPosition();
+
+    // Get global bounds for collision detection
+    sf::FloatRect getGlobalBounds() const;
 };
