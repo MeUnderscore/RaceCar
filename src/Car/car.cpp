@@ -206,7 +206,7 @@ void Car::handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, cons
             }
 
             // Only apply rotation if it's less than 90 degrees
-            if (angleDifference < 90.0f)
+            if (angleDifference < 45.0f)
             {
                 angle = newAngle;
             }

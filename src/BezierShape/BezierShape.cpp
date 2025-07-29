@@ -19,9 +19,9 @@ void BezierShape::drawEdgeCircles(sf::RenderWindow &window) const
 {
     // Create a small black circle
     sf::CircleShape circle;
-    circle.setRadius(3.0f);
+    circle.setRadius(5.0f);
     circle.setFillColor(sf::Color::Black);
-    circle.setOrigin({3.0f, 3.0f}); // Center the origin
+    circle.setOrigin({5.0f, 5.0f}); // Center the origin
 
     // Draw circles at each end of every 5th rectangle
     for (size_t i = 0; i < segments.size(); ++i)

@@ -6,49 +6,49 @@ Track::Track(unsigned int width, unsigned int height)
     : windowWidth(width), windowHeight(height), trackWidth(100.0f)
 {
     // Add the first curve
-    addCurve(sf::Vector2f(350.0f, 230.0f), sf::Vector2f(600.0f, 200.0f), sf::Vector2f(700.0f, 350.0f), trackWidth, 1000);
+    addCurve(sf::Vector2f(350.0f, 230.0f), sf::Vector2f(600.0f, 200.0f), sf::Vector2f(700.0f, 350.0f), trackWidth, 400);
 
     // Add the second curve
-    addSmoothCurve(sf::Vector2f(1240.0f, 225.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(1240.0f, 225.0f), trackWidth, 600);
 
     // Add the third curve
-    addSmoothCurve(sf::Vector2f(1650.0f, 290.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(1650.0f, 290.0f), trackWidth, 400);
 
     // Add the fourth curve
-    addSmoothCurve(sf::Vector2f(2000.0f, 150.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(2000.0f, 150.0f), trackWidth, 300);
 
     // Add the fifth curve
-    addSmoothCurve(sf::Vector2f(2400.0f, 350.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(2400.0f, 350.0f), trackWidth, 500);
 
     // Add the sixth curve
-    addSmoothCurve(sf::Vector2f(2300.0f, 650.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(2300.0f, 650.0f), trackWidth, 300);
 
     // Add the seventh curve
-    addSmoothCurve(sf::Vector2f(2300.0f, 900.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(2300.0f, 900.0f), trackWidth, 200);
 
     // Add the eighth curve
-    addSmoothCurve(sf::Vector2f(2350.0f, 1150.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(2350.0f, 1150.0f), trackWidth, 200);
 
     // Add the ninth curve
-    addSmoothCurve(sf::Vector2f(1800.0f, 1050.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(1800.0f, 1050.0f), trackWidth, 700);
 
     // Add the tenth curve
-    addSmoothCurve(sf::Vector2f(1100.0f, 1000.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(1100.0f, 1000.0f), trackWidth, 400);
 
     // Add the eleventh curve
-    addSmoothCurve(sf::Vector2f(500.0f, 1150.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(500.0f, 1150.0f), trackWidth, 400);
 
     // Add the twelfth curve
-    addSmoothCurve(sf::Vector2f(350.0f, 850.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(350.0f, 850.0f), trackWidth, 300);
 
     // Add the thirteenth curve
-    addSmoothCurve(sf::Vector2f(150.0f, 550.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(150.0f, 550.0f), trackWidth, 200);
 
     // Add the fourteenth curve
-    addSmoothCurve(sf::Vector2f(180.0f, 300.0f), trackWidth, 1000);
+    addSmoothCurve(sf::Vector2f(180.0f, 300.0f), trackWidth, 200);
 
     // Add the fifteenth curve that connects back to the first curve (creating a complete loop)
-    addLoopClosingCurve(trackWidth, 1000);
+    addLoopClosingCurve(trackWidth, 100);
 }
 
 void Track::draw(sf::RenderWindow &window)
