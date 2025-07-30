@@ -9,8 +9,13 @@ Car::Car(float startX, float startY, float carWidth, float carHeight)
     carShape.setRotation(angle);
 }
 
-void Car::draw(sf::RenderWindow &window)
+void Car::draw(sf::RenderWindow &window) const
 {
+    // Set the car shape's position and rotation
+    const_cast<CarShape &>(carShape).setPosition(sf::Vector2f(x, y));
+    const_cast<CarShape &>(carShape).setRotation(angle);
+
+    // Draw the car shape
     window.draw(carShape);
 }
 

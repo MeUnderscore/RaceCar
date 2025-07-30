@@ -48,6 +48,11 @@ void Timer::start()
     }
 }
 
+void Timer::stop()
+{
+    isRunning = false;
+}
+
 void Timer::reset()
 {
     isRunning = false;
@@ -65,11 +70,17 @@ void Timer::update()
 {
     if (isRunning)
     {
-        elapsedTime = clock.getElapsedTime().asSeconds();
-        timeString = formatTime(elapsedTime);
-        if (timerText)
+        float newElapsedTime = clock.getElapsedTime().asSeconds();
+
+        // Only update if time has actually changed (reduces string operations)
+        if (newElapsedTime != elapsedTime)
         {
-            timerText->setString(timeString);
+            elapsedTime = newElapsedTime;
+            timeString = formatTime(elapsedTime);
+            if (timerText)
+            {
+                timerText->setString(timeString);
+            }
         }
     }
 }

@@ -25,10 +25,22 @@
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\TimerLogic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\TimerRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\Checkpoint.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointUIRenderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Game\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

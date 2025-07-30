@@ -1,64 +1,90 @@
 #include "CheckpointHandler.h"
 #include <iostream>
-#include <sstream>
 
 CheckpointHandler::CheckpointHandler()
-    : totalCheckpoints(0), hitCheckpoints(0), checkpointText(nullptr)
+    : totalCheckpoints(0), hitCheckpoints(0), lapCompleted(false)
 {
-    // Load font for checkpoint counter
-    if (!font.openFromFile("../../Fonts/ARIAL.TTF"))
-    {
-        std::cout << "Failed to load font for checkpoint counter!" << std::endl;
-    }
-    else
-    {
-        // Initialize checkpoint text
-        checkpointText = new sf::Text(font, "Checkpoints: 0/0", 20);
-        checkpointText->setFillColor(sf::Color::White);
-        checkpointText->setOutlineColor(sf::Color::Black);
-        checkpointText->setOutlineThickness(1.0f);
-    }
 }
 
-void CheckpointHandler::initializeCheckpoints(const std::vector<std::vector<sf::Vector2f>> &segmentCorners)
+void CheckpointHandler::initializeCheckpoints(const std::vector<SegmentData> &segmentData)
 {
     checkpoints.clear();
+    finalCheckpoint.reset();
     totalCheckpoints = 0;
     hitCheckpoints = 0;
+    lapCompleted = false;
 
-    for (size_t i = 0; i < segmentCorners.size(); ++i)
+    for (size_t i = 0; i < segmentData.size(); ++i)
     {
-        const auto &corners = segmentCorners[i];
-        if (corners.size() == 4)
+        const auto &segment = segmentData[i];
+
+        // Calculate the four corners of the rectangle based on position, size, and rotation
+        float cosRot = std::cos(segment.rotation * 3.14159f / 180.0f);
+        float sinRot = std::sin(segment.rotation * 3.14159f / 180.0f);
+
+        // Double the width for better collision detection at high speeds
+        float doubledWidth = segment.size.x * 8.0f;
+
+        std::vector<sf::Vector2f> corners;
+
+        // Top-left corner
+        corners.push_back(segment.position + sf::Vector2f(
+                                                 -doubledWidth / 2.0f * cosRot - segment.size.y / 2.0f * sinRot,
+                                                 -doubledWidth / 2.0f * sinRot + segment.size.y / 2.0f * cosRot));
+
+        // Top-right corner
+        corners.push_back(segment.position + sf::Vector2f(
+                                                 doubledWidth / 2.0f * cosRot - segment.size.y / 2.0f * sinRot,
+                                                 doubledWidth / 2.0f * sinRot + segment.size.y / 2.0f * cosRot));
+
+        // Bottom-right corner
+        corners.push_back(segment.position + sf::Vector2f(
+                                                 doubledWidth / 2.0f * cosRot + segment.size.y / 2.0f * sinRot,
+                                                 doubledWidth / 2.0f * sinRot - segment.size.y / 2.0f * cosRot));
+
+        // Bottom-left corner
+        corners.push_back(segment.position + sf::Vector2f(
+                                                 -doubledWidth / 2.0f * cosRot + segment.size.y / 2.0f * sinRot,
+                                                 -doubledWidth / 2.0f * sinRot - segment.size.y / 2.0f * cosRot));
+
+        checkpoints.push_back(std::make_unique<Checkpoint>(corners, static_cast<int>(i)));
+        totalCheckpoints++;
+
+        // Create final checkpoint at the same position as the first checkpoint
+        if (i == 0)
         {
-            checkpoints.push_back(std::make_unique<Checkpoint>(corners, static_cast<int>(i)));
-            totalCheckpoints++;
+            finalCheckpoint = std::make_unique<Checkpoint>(corners, -1); // Use -1 to indicate final checkpoint
         }
     }
-
-    updateCheckpointText();
-    std::cout << "Initialized " << totalCheckpoints << " checkpoints" << std::endl;
 }
 
 CheckpointHandler::~CheckpointHandler()
 {
-    if (checkpointText)
-    {
-        delete checkpointText;
-    }
 }
 
-void CheckpointHandler::checkCarPosition(const sf::Vector2f &carPosition)
+void CheckpointHandler::checkCarPositionWithLine(const sf::Vector2f &previousPosition, const sf::Vector2f &currentPosition)
 {
-    for (auto &checkpoint : checkpoints)
+    // Only check the next checkpoint in sequence
+    if (hitCheckpoints < checkpoints.size())
     {
-        if (!checkpoint->getIsHit() && checkpoint->isPointInside(carPosition))
+        auto &checkpoint = checkpoints[hitCheckpoints];
+
+        if (!checkpoint->getIsHit() && checkpoint->isLineIntersecting(previousPosition, currentPosition))
         {
             checkpoint->markAsHit();
             hitCheckpoints++;
-            updateCheckpointText();
-            std::cout << "Checkpoint " << checkpoint->getCheckpointNumber() << " hit! ("
-                      << hitCheckpoints << "/" << totalCheckpoints << ")" << std::endl;
+            std::cout << "DEBUG: Checkpoint " << checkpoint->getCheckpointNumber() << " hit at position ("
+                      << currentPosition.x << ", " << currentPosition.y << ")" << std::endl;
+        }
+    }
+
+    // Check final checkpoint only if all regular checkpoints are hit
+    if (hitCheckpoints == totalCheckpoints && finalCheckpoint && !lapCompleted)
+    {
+        if (finalCheckpoint->isLineIntersecting(previousPosition, currentPosition))
+        {
+            finalCheckpoint->markAsHit();
+            lapCompleted = true;
         }
     }
 }
@@ -73,45 +99,46 @@ int CheckpointHandler::getTotalCheckpoints() const
     return totalCheckpoints;
 }
 
+bool CheckpointHandler::isLapCompleted() const
+{
+    return lapCompleted;
+}
+
 void CheckpointHandler::resetAllCheckpoints()
 {
     for (auto &checkpoint : checkpoints)
     {
         checkpoint->reset();
     }
+    if (finalCheckpoint)
+    {
+        finalCheckpoint->reset();
+    }
     hitCheckpoints = 0;
-    updateCheckpointText();
-    std::cout << "All checkpoints reset" << std::endl;
+    lapCompleted = false;
 }
 
-void CheckpointHandler::drawCheckpoints(sf::RenderWindow &window)
+void CheckpointHandler::drawCheckpoints(sf::RenderWindow &window) const
 {
-    for (const auto &checkpoint : checkpoints)
+    // Only draw the next checkpoint (much faster than drawing all)
+    if (hitCheckpoints < checkpoints.size())
     {
-        checkpoint->draw(window);
+        checkpoints[hitCheckpoints]->draw(window);
+    }
+
+    // Draw final checkpoint only when all regular checkpoints are hit
+    if (finalCheckpoint && hitCheckpoints == totalCheckpoints)
+    {
+        finalCheckpoint->draw(window);
     }
 }
 
-void CheckpointHandler::drawCheckpointCounter(sf::RenderWindow &window)
+const std::vector<std::unique_ptr<Checkpoint>> &CheckpointHandler::getCheckpoints() const
 {
-    if (checkpointText)
-    {
-        // Position the text in the top right corner
-        sf::Vector2u windowSize = window.getSize();
-        checkpointText->setPosition(sf::Vector2f(
-            windowSize.x - 200.0f,
-            20.0f));
-
-        window.draw(*checkpointText);
-    }
+    return checkpoints;
 }
 
-void CheckpointHandler::updateCheckpointText()
+const std::unique_ptr<Checkpoint> &CheckpointHandler::getFinalCheckpoint() const
 {
-    if (checkpointText)
-    {
-        std::ostringstream oss;
-        oss << "Checkpoints: " << hitCheckpoints << "/" << totalCheckpoints;
-        checkpointText->setString(oss.str());
-    }
+    return finalCheckpoint;
 }

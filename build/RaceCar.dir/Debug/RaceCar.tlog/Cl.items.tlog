@@ -1,0 +1,14 @@
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\main.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\main.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Background\Background.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\Background.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Track\track.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\track.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\BezierCurve\BezierCurve.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\BezierCurve.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\BezierShape\BezierShape.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\BezierShape.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\Car.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\Car.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\CarShape.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\CarShape.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\Timer.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\Timer.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\TimerLogic.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\TimerLogic.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\TimerRenderer.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\TimerRenderer.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\Checkpoint.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\Checkpoint.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointHandler.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\CheckpointHandler.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointUIRenderer.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\CheckpointUIRenderer.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Game\Game.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\Game.obj

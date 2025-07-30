@@ -20,6 +20,9 @@ public:
     // Start the timer (called when W is pressed for the first time)
     void start();
 
+    // Stop the timer (called when lap is completed)
+    void stop();
+
     // Reset the timer (called when R is pressed or car hits checkpoint)
     void reset();
 

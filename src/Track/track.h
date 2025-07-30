@@ -2,8 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "../BezierShape/BezierShape.h"
+#include "../Interfaces/IRenderable.h"
 
-class Track
+class Track : public IRenderable
 {
 private:
     std::vector<BezierShape> trackShapes;
@@ -13,7 +14,7 @@ private:
 
 public:
     Track(unsigned int width, unsigned int height);
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window) const override;
     void setWindowSize(unsigned int width, unsigned int height);
 
     // Create a curved track segment using BezierShape
@@ -32,13 +33,13 @@ public:
     sf::Vector2f getStartPosition() const;
 
     // Draw the checkered flag at the start line
-    void drawCheckeredFlag(sf::RenderWindow &window);
+    void drawCheckeredFlag(sf::RenderWindow &window) const;
 
     // Draw red circles at Bezier curve points for debugging
-    void drawBezierPoints(sf::RenderWindow &window);
+    void drawBezierPoints(sf::RenderWindow &window) const;
 
     // Draw black circles at track edges
-    void drawTrackEdges(sf::RenderWindow &window);
+    void drawTrackEdges(sf::RenderWindow &window) const;
 
     // Get all edge points for collision detection
     std::vector<sf::Vector2f> getAllEdgePoints() const;
@@ -50,9 +51,12 @@ public:
     // Get checkered flag bounds for collision detection
     sf::FloatRect getCheckeredFlagBounds() const;
 
-    // Get 4 corner positions of 20 evenly spaced rectangles from each curve segment
-    std::vector<std::vector<sf::Vector2f>> getTrackSegmentCorners() const;
+    // Get checkpoint segments data from all track shapes
+    std::vector<SegmentData> getCheckpointSegments() const;
 
-    // Save track segment corners to a text file
-    void saveTrackSegmentCornersToFile(const std::string &filename) const;
+    // Save checkpoint segments to a text file
+    void saveCheckpointSegmentsToFile(const std::string &filename) const;
+
+    // Save checkpoint segments to a binary file (more efficient)
+    void saveCheckpointSegmentsToBinaryFile(const std::string &filename) const;
 };

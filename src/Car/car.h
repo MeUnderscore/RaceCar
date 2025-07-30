@@ -1,8 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "CarShape.h"
+#include "../Interfaces/IRenderable.h"
 
-class Car
+class Car : public IRenderable
 {
 private:
     CarShape carShape;
@@ -19,7 +20,7 @@ private:
 public:
     Car(float startX, float startY, float carWidth = 20.0f, float carHeight = 10.0f);
 
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window) const override;
     void update(float deltaTime);
     void handleInput();
     void handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, const std::vector<sf::Vector2f> &outerEdgePoints);

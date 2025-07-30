@@ -1,5 +1,7 @@
 #include "BezierShape.h"
 #include <cmath>
+#include <fstream>  // Added for file operations
+#include <iostream> // Added for console output
 
 BezierShape::BezierShape(sf::Vector2f start, sf::Vector2f control, sf::Vector2f end, float w, int segments, sf::Color c)
     : startPoint(start), controlPoint(control), endPoint(end), width(w), numSegments(segments), color(c)
@@ -210,6 +212,7 @@ sf::Vector2f BezierShape::getControlPoint() const
 void BezierShape::generateSegments()
 {
     segments.clear();
+    checkpointSegments.clear();
 
     // Create Bezier curve
     BezierCurve curve(startPoint, controlPoint, endPoint);
@@ -259,4 +262,74 @@ void BezierShape::generateSegments()
 
         segments.push_back(segment);
     }
+
+    // Record 20 evenly spaced segments for checkpoints (including first and last)
+    int totalSegments = static_cast<int>(segments.size());
+    int checkpointCount = 20;
+
+    for (int i = 0; i < checkpointCount; i++)
+    {
+        int segmentIndex;
+        if (i == 0)
+        {
+            // First segment
+            segmentIndex = 0;
+        }
+        else if (i == checkpointCount - 1)
+        {
+            // Last segment
+            segmentIndex = totalSegments - 1;
+        }
+        else
+        {
+            // Evenly spaced segments in between
+            segmentIndex = (i * (totalSegments - 1)) / (checkpointCount - 1);
+        }
+
+        if (segmentIndex < totalSegments)
+        {
+            const auto &segment = segments[segmentIndex];
+
+            SegmentData data;
+            data.position = segment.getPosition();
+            data.size = segment.getSize();
+            data.rotation = segment.getRotation().asDegrees();
+            data.segmentIndex = segmentIndex;
+
+            checkpointSegments.push_back(data);
+        }
+    }
+}
+
+const std::vector<SegmentData> &BezierShape::getCheckpointSegments() const
+{
+    return checkpointSegments;
+}
+
+void BezierShape::saveCheckpointSegmentsToBinaryFile(const std::string &filename) const
+{
+    std::ofstream file(filename, std::ios::binary);
+    if (!file.is_open())
+    {
+        std::cout << "Failed to open binary file: " << filename << std::endl;
+        return;
+    }
+
+    // Write number of segments
+    size_t numSegments = checkpointSegments.size();
+    file.write(reinterpret_cast<const char *>(&numSegments), sizeof(numSegments));
+
+    // Write each segment
+    for (const auto &segment : checkpointSegments)
+    {
+        file.write(reinterpret_cast<const char *>(&segment.position.x), sizeof(float));
+        file.write(reinterpret_cast<const char *>(&segment.position.y), sizeof(float));
+        file.write(reinterpret_cast<const char *>(&segment.size.x), sizeof(float));
+        file.write(reinterpret_cast<const char *>(&segment.size.y), sizeof(float));
+        file.write(reinterpret_cast<const char *>(&segment.rotation), sizeof(float));
+        file.write(reinterpret_cast<const char *>(&segment.segmentIndex), sizeof(int));
+    }
+
+    file.close();
+    std::cout << "Checkpoint segments saved to binary file: " << filename << std::endl;
 }

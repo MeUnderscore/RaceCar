@@ -9,8 +9,23 @@ project(RaceCar)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Add executable
-add_executable(RaceCar src/main.cpp src/Background/Background.cpp src/Track/track.cpp src/BezierCurve/BezierCurve.cpp src/BezierShape/BezierShape.cpp src/Car/Car.cpp src/Car/CarShape.cpp src/Timer/Timer.cpp src/Checkpoint/Checkpoint.cpp src/Checkpoint/CheckpointHandler.cpp)
+# Add executable with all source files
+add_executable(RaceCar 
+    src/main.cpp 
+    src/Background/Background.cpp 
+    src/Track/track.cpp 
+    src/BezierCurve/BezierCurve.cpp 
+    src/BezierShape/BezierShape.cpp 
+    src/Car/Car.cpp 
+    src/Car/CarShape.cpp 
+    src/Timer/Timer.cpp
+    src/Timer/TimerLogic.cpp
+    src/Timer/TimerRenderer.cpp
+    src/Checkpoint/Checkpoint.cpp 
+    src/Checkpoint/CheckpointHandler.cpp
+    src/Checkpoint/CheckpointUIRenderer.cpp
+    src/Game/Game.cpp
+)
 
 # Find and link SFML
 find_package(SFML COMPONENTS Graphics Window System REQUIRED CONFIG)

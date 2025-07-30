@@ -2,26 +2,34 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include <memory>
+#include <string>
 #include "Checkpoint.h"
+#include "../BezierShape/BezierShape.h" // For SegmentData
+
+// Forward declaration
+class CheckpointUIRenderer;
 
 class CheckpointHandler
 {
 private:
     std::vector<std::unique_ptr<Checkpoint>> checkpoints;
-    sf::Font font;
-    sf::Text *checkpointText;
+    std::unique_ptr<Checkpoint> finalCheckpoint; // Final checkpoint at the start/finish line
     int totalCheckpoints;
     int hitCheckpoints;
+    bool lapCompleted;
 
 public:
     CheckpointHandler();
     ~CheckpointHandler();
 
-    // Initialize checkpoints from track segment corners
-    void initializeCheckpoints(const std::vector<std::vector<sf::Vector2f>> &segmentCorners);
+    // Initialize checkpoints from segment data
+    void initializeCheckpoints(const std::vector<SegmentData> &segmentData);
 
     // Check if car position hits any checkpoint
     void checkCarPosition(const sf::Vector2f &carPosition);
+    
+    // Check collision with line segment (for fast-moving cars)
+    void checkCarPositionWithLine(const sf::Vector2f &previousPosition, const sf::Vector2f &currentPosition);
 
     // Get the number of hit checkpoints
     int getHitCheckpoints() const;
@@ -29,15 +37,16 @@ public:
     // Get the total number of checkpoints
     int getTotalCheckpoints() const;
 
+    // Check if lap is completed
+    bool isLapCompleted() const;
+
     // Reset all checkpoints
     void resetAllCheckpoints();
 
     // Draw all checkpoints
-    void drawCheckpoints(sf::RenderWindow &window);
+    void drawCheckpoints(sf::RenderWindow &window) const;
 
-    // Draw the checkpoint counter in the top right
-    void drawCheckpointCounter(sf::RenderWindow &window);
-
-    // Update the checkpoint counter text
-    void updateCheckpointText();
+    // Get all checkpoints for external rendering
+    const std::vector<std::unique_ptr<Checkpoint>>& getCheckpoints() const;
+    const std::unique_ptr<Checkpoint>& getFinalCheckpoint() const;
 };

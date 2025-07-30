@@ -429,8 +429,12 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\Car.cpp" />
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\CarShape.cpp" />
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\Timer.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\TimerLogic.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\TimerRenderer.cpp" />
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\Checkpoint.cpp" />
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointHandler.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointUIRenderer.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Game\Game.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

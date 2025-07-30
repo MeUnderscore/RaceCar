@@ -1,12 +1,23 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <string>
 #include "../BezierCurve/BezierCurve.h"
+
+// Struct to store segment data for checkpoints
+struct SegmentData
+{
+    sf::Vector2f position; // Center position of the segment
+    sf::Vector2f size;     // Width and height of the segment
+    float rotation;        // Rotation in degrees
+    int segmentIndex;      // Index of the segment
+};
 
 class BezierShape
 {
 private:
     std::vector<sf::RectangleShape> segments;
+    std::vector<SegmentData> checkpointSegments; // 20 evenly spaced segments for checkpoints
     sf::Vector2f startPoint;
     sf::Vector2f controlPoint;
     sf::Vector2f endPoint;
@@ -44,6 +55,12 @@ public:
     // Get inner and outer edge points separately
     std::vector<sf::Vector2f> getInnerEdgePoints() const;
     std::vector<sf::Vector2f> getOuterEdgePoints() const;
+
+    // Get checkpoint segments data
+    const std::vector<SegmentData> &getCheckpointSegments() const;
+
+    // Save checkpoint segments to binary file (more efficient)
+    void saveCheckpointSegmentsToBinaryFile(const std::string &filename) const;
 
 private:
     // Generate the segments from the Bezier curve

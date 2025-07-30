@@ -1,8 +1,10 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "../Interfaces/ICollidable.h"
+#include "../Interfaces/IRenderable.h"
 
-class Checkpoint
+class Checkpoint : public ICollidable, public IRenderable
 {
 private:
     std::vector<sf::Vector2f> corners; // 4 corners of the checkpoint rectangle
@@ -12,24 +14,25 @@ private:
 public:
     Checkpoint(const std::vector<sf::Vector2f> &cornerPositions, int number);
 
-    // Check if a point is inside the checkpoint
-    bool isPointInside(const sf::Vector2f &point) const;
+    // ICollidable interface implementation
+    bool isPointInside(const sf::Vector2f &point) const override;
+    sf::FloatRect getBounds() const override;
+    
+    // Line segment intersection for fast-moving cars
+    bool isLineIntersecting(const sf::Vector2f &start, const sf::Vector2f &end) const;
 
-    // Check if the checkpoint has been hit
+private:
+    // Helper method for line segment intersection
+    bool lineSegmentsIntersect(const sf::Vector2f &a1, const sf::Vector2f &a2, 
+                              const sf::Vector2f &b1, const sf::Vector2f &b2) const;
+
+    // IRenderable interface implementation
+    void draw(sf::RenderWindow &window) const override;
+
+    // Checkpoint-specific methods
     bool getIsHit() const;
-
-    // Mark the checkpoint as hit
     void markAsHit();
-
-    // Get the checkpoint number
     int getCheckpointNumber() const;
-
-    // Get the center position of the checkpoint
     sf::Vector2f getCenter() const;
-
-    // Draw the checkpoint (for debugging)
-    void draw(sf::RenderWindow &window) const;
-
-    // Reset the checkpoint
     void reset();
 };
