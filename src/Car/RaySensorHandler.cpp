@@ -31,7 +31,7 @@ RaySensorHandler::RaySensorHandler()
         raySensors.emplace_back(angles[i]);
     }
 
-    std::cout << "RaySensorHandler initialized with " << NUM_RAYS << " rays" << std::endl;
+    // RaySensorHandler initialized silently
 }
 
 void RaySensorHandler::updateRays(const sf::Vector2f &carPosition, float carRotation)
@@ -46,9 +46,6 @@ void RaySensorHandler::checkCollisions(const sf::Vector2f &carPosition, float ca
                                        const std::vector<sf::Vector2f> &innerEdgePoints,
                                        const std::vector<sf::Vector2f> &outerEdgePoints)
 {
-    static int debugCounter = 0;
-    debugCounter++;
-
     int redRays = 0;
 
     for (size_t i = 0; i < raySensors.size(); ++i)
@@ -118,12 +115,7 @@ void RaySensorHandler::checkCollisions(const sf::Vector2f &carPosition, float ca
         }
     }
 
-    // Debug output every 60 frames (about every second)
-    if (debugCounter % 60 == 0)
-    {
-        std::cout << "Car at (" << carPosition.x << ", " << carPosition.y << ") rotation: " << carRotation
-                  << " - Red rays: " << redRays << "/8" << std::endl;
-    }
+    // Debug output removed
 }
 
 bool RaySensorHandler::checkRayIntersectsEdges(const sf::Vector2f &rayStart, const sf::Vector2f &rayEnd,
@@ -151,6 +143,29 @@ bool RaySensorHandler::checkRayIntersectsEdges(const sf::Vector2f &rayStart, con
     for (size_t i = 1; i < edgePoints.size() - 2; i += 2)
     {
         if (lineSegmentsIntersect(rayStart, rayEnd, edgePoints[i], edgePoints[i + 2]))
+        {
+            return true;
+        }
+    }
+
+    // Connect the last point back to the first point to close the track
+    // Top edge: last top point to first top point
+    if (edgePoints.size() >= 4)
+    {
+        size_t lastTopIndex = edgePoints.size() - 2; // Last top point
+        size_t firstTopIndex = 0;                    // First top point
+        if (lineSegmentsIntersect(rayStart, rayEnd, edgePoints[lastTopIndex], edgePoints[firstTopIndex]))
+        {
+            return true;
+        }
+    }
+
+    // Bottom edge: last bottom point to first bottom point
+    if (edgePoints.size() >= 4)
+    {
+        size_t lastBottomIndex = edgePoints.size() - 1; // Last bottom point
+        size_t firstBottomIndex = 1;                    // First bottom point
+        if (lineSegmentsIntersect(rayStart, rayEnd, edgePoints[lastBottomIndex], edgePoints[firstBottomIndex]))
         {
             return true;
         }

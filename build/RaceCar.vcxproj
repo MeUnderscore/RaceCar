@@ -437,6 +437,10 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointHandler.cpp" />
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointUIRenderer.cpp" />
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Game\Game.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\NeuralNetwork.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\AIController.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\UI\Button.cpp" />
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\UI\UIManager.cpp" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

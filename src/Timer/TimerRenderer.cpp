@@ -1,6 +1,6 @@
 #include "TimerRenderer.h"
 
-TimerRenderer::TimerRenderer(TimerLogic& timer)
+TimerRenderer::TimerRenderer(TimerLogic &timer)
     : timerLogic(timer), timerText(nullptr)
 {
     // Load the font from the Fonts directory
@@ -24,7 +24,7 @@ TimerRenderer::~TimerRenderer()
     }
 }
 
-void TimerRenderer::draw(sf::RenderWindow& window) const
+void TimerRenderer::draw(sf::RenderWindow &window) const
 {
     // Create a simple visual timer using rectangles
     // Draw a background rectangle for the timer
@@ -42,14 +42,22 @@ void TimerRenderer::draw(sf::RenderWindow& window) const
     // Draw the text if available
     if (timerText)
     {
-        // Update the text with current time
-        timerText->setString(timerLogic.getTimeString());
-        
-        // Position the text in the center of the background
-        timerText->setPosition(sf::Vector2f(
-            (window.getSize().x - 100) / 2.0f,
-            30.0f));
-        window.draw(*timerText);
+        try
+        {
+            // Update the text with current time
+            timerText->setString(timerLogic.getTimeString());
+
+            // Position the text in the center of the background
+            timerText->setPosition(sf::Vector2f(
+                (window.getSize().x - 100) / 2.0f,
+                30.0f));
+            window.draw(*timerText);
+        }
+        catch (...)
+        {
+            // If drawing text fails, fallback to visualization
+            drawTimeVisualization(window, timerLogic.getTimeString());
+        }
     }
     else
     {
@@ -58,7 +66,7 @@ void TimerRenderer::draw(sf::RenderWindow& window) const
     }
 }
 
-void TimerRenderer::drawTimeVisualization(sf::RenderWindow& window, const std::string& timeStr) const
+void TimerRenderer::drawTimeVisualization(sf::RenderWindow &window, const std::string &timeStr) const
 {
     // Create a simple visual representation using colored rectangles
     // Each digit will be represented by a colored rectangle
@@ -102,4 +110,4 @@ void TimerRenderer::drawTimeVisualization(sf::RenderWindow& window, const std::s
 
         window.draw(digitRect);
     }
-} 
+}

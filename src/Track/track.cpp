@@ -298,7 +298,7 @@ void Track::saveCheckpointSegmentsToBinaryFile(const std::string &filename) cons
     std::ofstream file(filename, std::ios::binary);
     if (!file.is_open())
     {
-        std::cout << "Failed to open binary file: " << filename << std::endl;
+        // Failed to open binary file silently
         return;
     }
 

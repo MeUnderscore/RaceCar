@@ -7,11 +7,13 @@ class Button
 {
 private:
     sf::RectangleShape shape;
-    sf::Text text;
     std::string label;
     std::function<void()> onClickCallback;
     bool isHovered;
     bool isPressed;
+    sf::Color baseColor;
+    sf::Color hoverColor;
+    sf::Color pressedColor;
 
 public:
     Button(const std::string& label, float x, float y, float width, float height);
@@ -36,4 +38,5 @@ public:
     void setPosition(float x, float y);
     void setSize(float width, float height);
     void setEnabled(bool enabled);
+    void setColors(const sf::Color& base, const sf::Color& hover, const sf::Color& pressed);
 }; 

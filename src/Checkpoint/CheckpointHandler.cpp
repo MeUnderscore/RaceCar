@@ -64,22 +64,84 @@ CheckpointHandler::~CheckpointHandler()
 
 void CheckpointHandler::checkCarPositionWithLine(const sf::Vector2f &previousPosition, const sf::Vector2f &currentPosition)
 {
-    // Only check the next checkpoint in sequence
-    if (hitCheckpoints < checkpoints.size())
-    {
-        auto &checkpoint = checkpoints[hitCheckpoints];
+    // Debug output removed
 
-        if (!checkpoint->getIsHit() && checkpoint->isLineIntersecting(previousPosition, currentPosition))
+    // Calculate distance moved to determine sampling frequency
+    float distanceMoved = std::sqrt(
+        (currentPosition.x - previousPosition.x) * (currentPosition.x - previousPosition.x) +
+        (currentPosition.y - previousPosition.y) * (currentPosition.y - previousPosition.y));
+
+    // Sample multiple points along the movement path for fast-moving cars
+    int numSamples = std::max(1, static_cast<int>(distanceMoved / 10.0f)); // Sample every 10 pixels
+    numSamples = std::min(numSamples, 10);                                 // Cap at 10 samples to avoid performance issues
+
+    bool checkpointHit = false;
+    int checkRange = 3; // Check up to 3 checkpoints ahead
+
+    // Check each sample point along the movement path
+    for (int sample = 0; sample <= numSamples && !checkpointHit; ++sample)
+    {
+        // Calculate sample position along the movement path
+        float t = (numSamples > 0) ? static_cast<float>(sample) / static_cast<float>(numSamples) : 0.0f;
+        sf::Vector2f samplePosition = previousPosition + t * (currentPosition - previousPosition);
+
+        // Check the next few checkpoints in sequence
+        for (int i = 0; i < checkRange && (hitCheckpoints + i) < checkpoints.size(); ++i)
         {
-            checkpoint->markAsHit();
-            hitCheckpoints++;
+            auto &checkpoint = checkpoints[hitCheckpoints + i];
+
+            if (!checkpoint->getIsHit() && checkpoint->isPointInside(samplePosition))
+            {
+                checkpoint->markAsHit();
+                hitCheckpoints += i + 1;
+                checkpointHit = true;
+                break;
+            }
+        }
+    }
+
+    // If no checkpoint was hit with sampling, try the original line intersection method
+    if (!checkpointHit)
+    {
+        for (int i = 0; i < checkRange && (hitCheckpoints + i) < checkpoints.size(); ++i)
+        {
+            auto &checkpoint = checkpoints[hitCheckpoints + i];
+
+            if (!checkpoint->getIsHit() &&
+                (checkpoint->isLineIntersecting(previousPosition, currentPosition) ||
+                 checkpoint->isPointInside(currentPosition)))
+            {
+                checkpoint->markAsHit();
+                hitCheckpoints += i + 1;
+                checkpointHit = true;
+                break;
+            }
+        }
+    }
+
+    // If no checkpoint was hit in the forward range, check if we missed any previous checkpoints
+    if (!checkpointHit && hitCheckpoints > 0)
+    {
+        // Check a few checkpoints behind in case we missed one
+        for (int i = 1; i <= 2 && (hitCheckpoints - i) >= 0; ++i)
+        {
+            auto &checkpoint = checkpoints[hitCheckpoints - i];
+
+            if (!checkpoint->getIsHit() &&
+                (checkpoint->isLineIntersecting(previousPosition, currentPosition) ||
+                 checkpoint->isPointInside(currentPosition)))
+            {
+                checkpoint->markAsHit();
+                break;
+            }
         }
     }
 
     // Check final checkpoint only if all regular checkpoints are hit
     if (hitCheckpoints == totalCheckpoints && finalCheckpoint && !lapCompleted)
     {
-        if (finalCheckpoint->isLineIntersecting(previousPosition, currentPosition))
+        if (finalCheckpoint->isLineIntersecting(previousPosition, currentPosition) ||
+            finalCheckpoint->isPointInside(currentPosition))
         {
             finalCheckpoint->markAsHit();
             lapCompleted = true;

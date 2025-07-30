@@ -33,13 +33,20 @@ void CheckpointUIRenderer::draw(sf::RenderWindow &window) const
 {
     if (checkpointText)
     {
-        // Position the text in the top right corner
-        sf::Vector2u windowSize = window.getSize();
-        checkpointText->setPosition(sf::Vector2f(
-            windowSize.x - 200.0f,
-            20.0f));
+        try
+        {
+            // Position the text in the top right corner
+            sf::Vector2u windowSize = window.getSize();
+            checkpointText->setPosition(sf::Vector2f(
+                windowSize.x - 200.0f,
+                20.0f));
 
-        window.draw(*checkpointText);
+            window.draw(*checkpointText);
+        }
+        catch (...)
+        {
+            // If drawing text fails, just skip it
+        }
     }
 }
 

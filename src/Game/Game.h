@@ -12,7 +12,6 @@
 #include "../Track/track.h"
 #include "../Background/Background.h"
 #include "../UI/UIManager.h"
-
 // Game class that manages the overall game state
 class Game
 {

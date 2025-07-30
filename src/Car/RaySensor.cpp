@@ -46,5 +46,6 @@ sf::Vector2f RaySensor::getEndPoint(const sf::Vector2f &carPosition, float carRo
 
 void RaySensor::draw(sf::RenderWindow &window) const
 {
-    window.draw(shape);
+    // Make rays invisible by not drawing them
+    // window.draw(shape);
 }

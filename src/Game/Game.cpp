@@ -22,26 +22,29 @@ Game::Game(unsigned int width, unsigned int height)
     checkpointHandler = std::make_unique<CheckpointHandler>();
     checkpointHandler->initializeCheckpoints(track->getCheckpointSegments());
     checkpointUIRenderer = std::make_unique<CheckpointUIRenderer>(*checkpointHandler);
-    
+
     // Create UI system
     uiManager = std::make_unique<UIManager>();
     uiManager->initialize();
-    
+
     // Set up button callbacks
-    uiManager->setStartCallback([this]() { 
-        std::cout << "Start button clicked!" << std::endl;
-        // TODO: Start AI learning process
-    });
-    
-    uiManager->setStopCallback([this]() { 
-        std::cout << "Stop button clicked!" << std::endl;
-        // TODO: Stop AI learning process
-    });
-    
-    uiManager->setSaveCallback([this]() { 
-        std::cout << "Save button clicked!" << std::endl;
-        // TODO: Save AI training data
-    });
+    uiManager->setStartCallback([this]()
+                                {
+                                    std::cout << "Start button clicked!" << std::endl;
+                                    // TODO: Start AI learning process
+                                });
+
+    uiManager->setStopCallback([this]()
+                               {
+                                   std::cout << "Pause button clicked!" << std::endl;
+                                   // TODO: Pause AI learning process
+                               });
+
+    uiManager->setSaveCallback([this]()
+                               {
+                                   std::cout << "Save button clicked!" << std::endl;
+                                   // TODO: Save AI training data
+                               });
 }
 
 Game::~Game()
@@ -139,7 +142,7 @@ void Game::update()
     // Update timer
     timerLogic->update();
 
-    // Update UI
+        // Update UI
     checkpointUIRenderer->updateText();
     
     // Update UI manager
@@ -168,7 +171,7 @@ void Game::render()
     // Draw checkpoints
     checkpointHandler->drawCheckpoints(*window);
 
-    // Draw UI
+        // Draw UI
     timerRenderer->draw(*window);
     checkpointUIRenderer->draw(*window);
     

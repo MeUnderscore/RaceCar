@@ -2,56 +2,33 @@
 #include <iostream>
 
 Button::Button(const std::string &label, float x, float y, float width, float height)
-    : label(label), isHovered(false), isPressed(false)
+    : label(label), isHovered(false), isPressed(false),
+      baseColor(100, 100, 100), hoverColor(120, 120, 120), pressedColor(80, 80, 80)
 {
+    std::cout << "Creating button: " << label << std::endl;
+
     // Set up the button shape
     shape.setSize(sf::Vector2f(width, height));
-    shape.setPosition(x, y);
-    shape.setFillColor(sf::Color(100, 100, 100)); // Default gray
+    shape.setPosition(sf::Vector2f(x, y));
+    shape.setFillColor(baseColor);
     shape.setOutlineColor(sf::Color::Black);
     shape.setOutlineThickness(2.0f);
 
-    // Set up the text
-    static sf::Font font;
-    static bool fontLoaded = false;
-
-    if (!fontLoaded)
-    {
-        if (font.loadFromFile("Fonts/ARIAL.TTF"))
-        {
-            fontLoaded = true;
-        }
-        else
-        {
-            std::cout << "Failed to load font for button" << std::endl;
-        }
-    }
-
-    text.setFont(font);
-    text.setString(label);
-    text.setCharacterSize(16);
-    text.setFillColor(sf::Color::White);
-
-    // Center the text on the button
-    sf::FloatRect textBounds = text.getLocalBounds();
-    text.setPosition(
-        x + (width - textBounds.width) / 2.0f,
-        y + (height - textBounds.height) / 2.0f - 5.0f // Slight vertical adjustment
-    );
+    std::cout << "Button constructor completed for: " << label << std::endl;
 }
 
 void Button::handleEvent(const sf::Event &event, const sf::Vector2f &mousePos)
 {
-    if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+    if (auto mousePressed = event.getIf<sf::Event::MouseButtonPressed>())
     {
-        if (shape.getGlobalBounds().contains(mousePos))
+        if (mousePressed->button == sf::Mouse::Button::Left && shape.getGlobalBounds().contains(mousePos))
         {
             isPressed = true;
         }
     }
-    else if (event.type == sf::Event::MouseButtonReleased && event.mouseButton.button == sf::Mouse::Left)
+    else if (auto mouseReleased = event.getIf<sf::Event::MouseButtonReleased>())
     {
-        if (isPressed && shape.getGlobalBounds().contains(mousePos))
+        if (mouseReleased->button == sf::Mouse::Button::Left && isPressed && shape.getGlobalBounds().contains(mousePos))
         {
             if (onClickCallback)
             {
@@ -70,56 +47,65 @@ void Button::update(const sf::Vector2f &mousePos)
     // Update colors based on state
     if (isPressed)
     {
-        shape.setFillColor(sf::Color(80, 80, 80)); // Darker when pressed
+        shape.setFillColor(pressedColor);
     }
     else if (isHovered)
     {
-        shape.setFillColor(sf::Color(120, 120, 120)); // Lighter when hovered
+        shape.setFillColor(hoverColor);
     }
     else
     {
-        shape.setFillColor(sf::Color(100, 100, 100)); // Default gray
+        shape.setFillColor(baseColor);
     }
 }
 
 void Button::draw(sf::RenderWindow &window) const
 {
     window.draw(shape);
-    window.draw(text);
 }
 
 void Button::setPosition(float x, float y)
 {
-    shape.setPosition(x, y);
-
-    // Update text position to stay centered
-    sf::FloatRect textBounds = text.getLocalBounds();
-    text.setPosition(
-        x + (shape.getSize().x - textBounds.width) / 2.0f,
-        y + (shape.getSize().y - textBounds.height) / 2.0f - 5.0f);
+    shape.setPosition(sf::Vector2f(x, y));
 }
 
 void Button::setSize(float width, float height)
 {
     shape.setSize(sf::Vector2f(width, height));
-
-    // Update text position to stay centered
-    sf::FloatRect textBounds = text.getLocalBounds();
-    text.setPosition(
-        shape.getPosition().x + (width - textBounds.width) / 2.0f,
-        shape.getPosition().y + (height - textBounds.height) / 2.0f - 5.0f);
 }
 
 void Button::setEnabled(bool enabled)
 {
     if (enabled)
     {
-        shape.setFillColor(sf::Color(100, 100, 100));
-        text.setFillColor(sf::Color::White);
+        shape.setFillColor(baseColor);
     }
     else
     {
         shape.setFillColor(sf::Color(60, 60, 60));
-        text.setFillColor(sf::Color(150, 150, 150));
+    }
+}
+
+void Button::setColors(const sf::Color &base, const sf::Color &hover, const sf::Color &pressed)
+{
+    baseColor = base;
+    hoverColor = hover;
+    pressedColor = pressed;
+
+    // Update current color if not disabled
+    if (shape.getFillColor() != sf::Color(60, 60, 60))
+    {
+        if (isPressed)
+        {
+            shape.setFillColor(pressedColor);
+        }
+        else if (isHovered)
+        {
+            shape.setFillColor(hoverColor);
+        }
+        else
+        {
+            shape.setFillColor(baseColor);
+        }
     }
 }

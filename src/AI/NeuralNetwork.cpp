@@ -47,7 +47,7 @@ void NeuralNetwork::initializeSimple(int numInputs, int numOutputs, int numHidde
         {
             for (int output : outputNodes)
             {
-                addConnection(input, output);
+                addConnection(input, output, 0.1); // Add default weight
             }
         }
     }
@@ -58,7 +58,7 @@ void NeuralNetwork::initializeSimple(int numInputs, int numOutputs, int numHidde
         {
             for (int hidden : hiddenNodes)
             {
-                addConnection(input, hidden);
+                addConnection(input, hidden, 0.1); // Add default weight
             }
         }
 
@@ -67,7 +67,7 @@ void NeuralNetwork::initializeSimple(int numInputs, int numOutputs, int numHidde
         {
             for (int output : outputNodes)
             {
-                addConnection(hidden, output);
+                addConnection(hidden, output, 0.1); // Add default weight
             }
         }
     }

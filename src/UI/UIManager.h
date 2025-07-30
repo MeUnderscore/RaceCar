@@ -8,6 +8,7 @@ class UIManager
 {
 private:
     std::vector<Button> buttons;
+    std::vector<sf::Text> buttonLabels;
     sf::Font font;
     bool fontLoaded;
 

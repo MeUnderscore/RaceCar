@@ -14,3 +14,7 @@ C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\Checkpoint.cpp;C
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointHandler.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\CheckpointHandler.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointUIRenderer.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\CheckpointUIRenderer.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Game\Game.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\Game.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\NeuralNetwork.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\NeuralNetwork.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\AIController.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\AIController.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\UI\Button.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\Button.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\UI\UIManager.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\UIManager.obj

@@ -17,11 +17,6 @@ Timer::Timer()
         timerText = new sf::Text(font, "00:00.000", 24);
         timerText->setFillColor(sf::Color::White);
     }
-    {
-        // Initialize timer text with the loaded font
-        timerText = new sf::Text(font, "00:00.000", 24);
-        timerText->setFillColor(sf::Color::White);
-    }
 
     // Initialize timer state
     isRunning = false;
@@ -103,11 +98,19 @@ void Timer::draw(sf::RenderWindow &window)
     // Draw the text if available
     if (timerText)
     {
-        // Position the text in the center of the background
-        timerText->setPosition(sf::Vector2f(
-            (window.getSize().x - 100) / 2.0f,
-            30.0f));
-        window.draw(*timerText);
+        try
+        {
+            // Position the text in the center of the background
+            timerText->setPosition(sf::Vector2f(
+                (window.getSize().x - 100) / 2.0f,
+                30.0f));
+            window.draw(*timerText);
+        }
+        catch (...)
+        {
+            // If drawing text fails, fallback to visualization
+            drawTimeVisualization(window, timeString);
+        }
     }
     else
     {

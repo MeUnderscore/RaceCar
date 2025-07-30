@@ -54,14 +54,15 @@ bool Checkpoint::isLineIntersecting(const sf::Vector2f &start, const sf::Vector2
     float minY = std::min({corners[0].y, corners[1].y, corners[2].y, corners[3].y});
     float maxY = std::max({corners[0].y, corners[1].y, corners[2].y, corners[3].y});
 
-    // Check if line segment intersects with bounding box
-    if (start.x < minX && end.x < minX)
+    // Check if line segment intersects with bounding box (with some tolerance)
+    float tolerance = 5.0f; // Add small tolerance for fast movement
+    if (start.x < minX - tolerance && end.x < minX - tolerance)
         return false;
-    if (start.x > maxX && end.x > maxX)
+    if (start.x > maxX + tolerance && end.x > maxX + tolerance)
         return false;
-    if (start.y < minY && end.y < minY)
+    if (start.y < minY - tolerance && end.y < minY - tolerance)
         return false;
-    if (start.y > maxY && end.y > maxY)
+    if (start.y > maxY + tolerance && end.y > maxY + tolerance)
         return false;
 
     // Check if either endpoint is inside the polygon
@@ -98,8 +99,9 @@ bool Checkpoint::lineSegmentsIntersect(const sf::Vector2f &a1, const sf::Vector2
     float s = (v.x * w.y - v.y * w.x) / d;
     float t = (u.x * w.y - u.y * w.x) / d;
 
-    // Check if the intersection point is on both line segments
-    return s >= 0.0f && s <= 1.0f && t >= 0.0f && t <= 1.0f;
+    // Check if the intersection point is on both line segments (with small tolerance)
+    float tolerance = 1e-6f;
+    return s >= -tolerance && s <= 1.0f + tolerance && t >= -tolerance && t <= 1.0f + tolerance;
 }
 
 bool Checkpoint::getIsHit() const
@@ -110,6 +112,11 @@ bool Checkpoint::getIsHit() const
 void Checkpoint::markAsHit()
 {
     isHit = true;
+}
+
+void Checkpoint::reset()
+{
+    isHit = false;
 }
 
 int Checkpoint::getCheckpointNumber() const
@@ -196,9 +203,4 @@ void Checkpoint::draw(sf::RenderWindow &window) const
 
     shape.setOutlineThickness(0.0f); // No outline
     window.draw(shape);
-}
-
-void Checkpoint::reset()
-{
-    isHit = false;
 }
