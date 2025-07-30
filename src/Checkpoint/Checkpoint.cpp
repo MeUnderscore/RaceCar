@@ -6,7 +6,8 @@ Checkpoint::Checkpoint(const std::vector<sf::Vector2f> &cornerPositions, int num
 {
     if (corners.size() != 4)
     {
-        std::cout << "Warning: Checkpoint " << number << " must have exactly 4 corners!" << std::endl;
+        // Invalid checkpoint - should have exactly 4 corners
+        corners.clear();
     }
 }
 
@@ -54,10 +55,14 @@ bool Checkpoint::isLineIntersecting(const sf::Vector2f &start, const sf::Vector2
     float maxY = std::max({corners[0].y, corners[1].y, corners[2].y, corners[3].y});
 
     // Check if line segment intersects with bounding box
-    if (start.x < minX && end.x < minX) return false;
-    if (start.x > maxX && end.x > maxX) return false;
-    if (start.y < minY && end.y < minY) return false;
-    if (start.y > maxY && end.y > maxY) return false;
+    if (start.x < minX && end.x < minX)
+        return false;
+    if (start.x > maxX && end.x > maxX)
+        return false;
+    if (start.y < minY && end.y < minY)
+        return false;
+    if (start.y > maxY && end.y > maxY)
+        return false;
 
     // Check if either endpoint is inside the polygon
     if (isPointInside(start) || isPointInside(end))
@@ -74,8 +79,8 @@ bool Checkpoint::isLineIntersecting(const sf::Vector2f &start, const sf::Vector2
     return false;
 }
 
-bool Checkpoint::lineSegmentsIntersect(const sf::Vector2f &a1, const sf::Vector2f &a2, 
-                                      const sf::Vector2f &b1, const sf::Vector2f &b2) const
+bool Checkpoint::lineSegmentsIntersect(const sf::Vector2f &a1, const sf::Vector2f &a2,
+                                       const sf::Vector2f &b1, const sf::Vector2f &b2) const
 {
     // Calculate the direction vectors
     sf::Vector2f u = a2 - a1;

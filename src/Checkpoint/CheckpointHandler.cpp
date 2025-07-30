@@ -73,8 +73,6 @@ void CheckpointHandler::checkCarPositionWithLine(const sf::Vector2f &previousPos
         {
             checkpoint->markAsHit();
             hitCheckpoints++;
-            std::cout << "DEBUG: Checkpoint " << checkpoint->getCheckpointNumber() << " hit at position ("
-                      << currentPosition.x << ", " << currentPosition.y << ")" << std::endl;
         }
     }
 

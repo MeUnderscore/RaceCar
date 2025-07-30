@@ -5,6 +5,8 @@ C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\BezierCurve\BezierCurve.cpp
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\BezierShape\BezierShape.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\BezierShape.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\Car.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\Car.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\CarShape.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\CarShape.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\RaySensor.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\RaySensor.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\RaySensorHandler.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\RaySensorHandler.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\Timer.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\Timer.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\TimerLogic.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\TimerLogic.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\TimerRenderer.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Debug\TimerRenderer.obj

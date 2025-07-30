@@ -18,6 +18,8 @@ add_executable(RaceCar
     src/BezierShape/BezierShape.cpp 
     src/Car/Car.cpp 
     src/Car/CarShape.cpp 
+    src/Car/RaySensor.cpp
+    src/Car/RaySensorHandler.cpp
     src/Timer/Timer.cpp
     src/Timer/TimerLogic.cpp
     src/Timer/TimerRenderer.cpp
@@ -25,6 +27,10 @@ add_executable(RaceCar
     src/Checkpoint/CheckpointHandler.cpp
     src/Checkpoint/CheckpointUIRenderer.cpp
     src/Game/Game.cpp
+    src/AI/NeuralNetwork.cpp
+    src/AI/AIController.cpp
+    src/UI/Button.cpp
+    src/UI/UIManager.cpp
 )
 
 # Find and link SFML

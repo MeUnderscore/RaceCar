@@ -21,11 +21,6 @@ public:
     // Line segment intersection for fast-moving cars
     bool isLineIntersecting(const sf::Vector2f &start, const sf::Vector2f &end) const;
 
-private:
-    // Helper method for line segment intersection
-    bool lineSegmentsIntersect(const sf::Vector2f &a1, const sf::Vector2f &a2, 
-                              const sf::Vector2f &b1, const sf::Vector2f &b2) const;
-
     // IRenderable interface implementation
     void draw(sf::RenderWindow &window) const override;
 
@@ -35,4 +30,9 @@ private:
     int getCheckpointNumber() const;
     sf::Vector2f getCenter() const;
     void reset();
+
+private:
+    // Helper method for line segment intersection
+    bool lineSegmentsIntersect(const sf::Vector2f &a1, const sf::Vector2f &a2, 
+                              const sf::Vector2f &b1, const sf::Vector2f &b2) const;
 };

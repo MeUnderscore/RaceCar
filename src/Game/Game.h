@@ -11,6 +11,7 @@
 #include "../Car/Car.h"
 #include "../Track/track.h"
 #include "../Background/Background.h"
+#include "../UI/UIManager.h"
 
 // Game class that manages the overall game state
 class Game
@@ -29,6 +30,9 @@ private:
     // Checkpoint system
     std::unique_ptr<CheckpointHandler> checkpointHandler;
     std::unique_ptr<CheckpointUIRenderer> checkpointUIRenderer;
+    
+    // UI system
+    std::unique_ptr<UIManager> uiManager;
     
     // Performance optimization
     sf::Clock deltaClock;

@@ -22,6 +22,26 @@ Game::Game(unsigned int width, unsigned int height)
     checkpointHandler = std::make_unique<CheckpointHandler>();
     checkpointHandler->initializeCheckpoints(track->getCheckpointSegments());
     checkpointUIRenderer = std::make_unique<CheckpointUIRenderer>(*checkpointHandler);
+    
+    // Create UI system
+    uiManager = std::make_unique<UIManager>();
+    uiManager->initialize();
+    
+    // Set up button callbacks
+    uiManager->setStartCallback([this]() { 
+        std::cout << "Start button clicked!" << std::endl;
+        // TODO: Start AI learning process
+    });
+    
+    uiManager->setStopCallback([this]() { 
+        std::cout << "Stop button clicked!" << std::endl;
+        // TODO: Stop AI learning process
+    });
+    
+    uiManager->setSaveCallback([this]() { 
+        std::cout << "Save button clicked!" << std::endl;
+        // TODO: Save AI training data
+    });
 }
 
 Game::~Game()
@@ -77,6 +97,10 @@ void Game::handleEvents()
             view.setCenter({static_cast<float>(newWidth) / 2.0f, static_cast<float>(newHeight) / 2.0f});
             window->setView(view);
         }
+        
+        // Handle UI events
+        sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+        uiManager->handleEvent(*event, mousePos);
     }
 }
 
@@ -92,9 +116,14 @@ void Game::update()
     car->handleInput();
     car->update(deltaTime);
 
-    // Handle collision detection
+    // Get track edge points for ray sensor updates
     std::vector<sf::Vector2f> innerEdgePoints = track->getInnerEdgePoints();
     std::vector<sf::Vector2f> outerEdgePoints = track->getOuterEdgePoints();
+
+    // Update ray sensors for AI
+    car->updateRaySensors(innerEdgePoints, outerEdgePoints);
+
+    // Handle collision detection
     car->handleCollision(innerEdgePoints, outerEdgePoints);
 
     // Check checkpoint collisions with line segment (prevents tunneling)
@@ -112,34 +141,39 @@ void Game::update()
 
     // Update UI
     checkpointUIRenderer->updateText();
+    
+    // Update UI manager
+    sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+    uiManager->update(mousePos);
 }
 
 void Game::render()
 {
-    // Clear the window
     window->clear();
 
     // Draw background
     background->draw(*window);
 
-    // Draw track segments
+    // Draw track
     track->draw(*window);
-
-    // Draw checkered flag at start line
     track->drawCheckeredFlag(*window);
-
-    // Draw track edges
     track->drawTrackEdges(*window);
 
     // Draw car
     car->draw(*window);
 
+    // Draw ray sensors for debugging
+    car->drawRaySensors(*window);
+
     // Draw checkpoints
     checkpointHandler->drawCheckpoints(*window);
 
-    // Draw UI elements
+    // Draw UI
     timerRenderer->draw(*window);
     checkpointUIRenderer->draw(*window);
+    
+    // Draw UI manager (buttons)
+    uiManager->draw(*window);
 
     window->display();
 }

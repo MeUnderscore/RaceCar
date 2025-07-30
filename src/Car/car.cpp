@@ -1,19 +1,19 @@
 #include "Car.h"
+#include <iostream>
 
 Car::Car(float startX, float startY, float carWidth, float carHeight)
-    : carShape(carWidth, carHeight), x(startX), y(startY), angle(0.0f), velocity(0.0f), maxSpeed(500.0f),
-      maxReverseSpeed(150.0f), acceleration(500.0f), deceleration(300.0f), rotationSpeed(180.0f)
+    : x(startX), y(startY), velocity(0.0f), rotation(0.0f), acceleration(500.0f), steering(0.0f),
+      carShape(carWidth, carHeight), maxSpeed(500.0f), maxReverseSpeed(150.0f), deceleration(300.0f), rotationSpeed(180.0f)
 {
-    // Set the initial position and rotation
-    carShape.setPosition({x, y});
-    carShape.setRotation(angle);
+    // RaySensorHandler is automatically initialized in the constructor
+    std::cout << "Car initialized with RaySensorHandler" << std::endl;
 }
 
 void Car::draw(sf::RenderWindow &window) const
 {
     // Set the car shape's position and rotation
     const_cast<CarShape &>(carShape).setPosition(sf::Vector2f(x, y));
-    const_cast<CarShape &>(carShape).setRotation(angle);
+    const_cast<CarShape &>(carShape).setRotation(rotation);
 
     // Draw the car shape
     window.draw(carShape);
@@ -21,14 +21,14 @@ void Car::draw(sf::RenderWindow &window) const
 
 void Car::update(float deltaTime)
 {
-    // Update car position based on velocity and angle
-    float radians = angle * 3.14159f / 180.0f;
+    // Update car position based on velocity and rotation
+    float radians = rotation * 3.14159f / 180.0f;
     x += velocity * std::cos(radians) * deltaTime;
     y += velocity * std::sin(radians) * deltaTime;
 
     // Update car shape position and rotation
     carShape.setPosition({x, y});
-    carShape.setRotation(angle);
+    carShape.setRotation(rotation);
 }
 
 void Car::handleInput()
@@ -55,11 +55,11 @@ void Car::handleInput()
         { // Small threshold to prevent turning when nearly stopped
             if (velocity > 0)
             {
-                angle -= rotationSpeed * 0.016f; // Normal steering when moving forward
+                rotation -= rotationSpeed * 0.016f; // Normal steering when moving forward
             }
             else
             {
-                angle += rotationSpeed * 0.016f; // Reversed steering when reversing
+                rotation += rotationSpeed * 0.016f; // Reversed steering when reversing
             }
         }
     }
@@ -70,11 +70,11 @@ void Car::handleInput()
         { // Small threshold to prevent turning when nearly stopped
             if (velocity > 0)
             {
-                angle += rotationSpeed * 0.016f; // Normal steering when moving forward
+                rotation += rotationSpeed * 0.016f; // Normal steering when moving forward
             }
             else
             {
-                angle -= rotationSpeed * 0.016f; // Reversed steering when reversing
+                rotation -= rotationSpeed * 0.016f; // Reversed steering when reversing
             }
         }
     }
@@ -104,17 +104,90 @@ void Car::setPosition(float newX, float newY)
     carShape.setPosition({x, y});
 }
 
+void Car::setAIInputs(float steering, float acceleration)
+{
+    // Clamp inputs to valid ranges
+    steering = std::max(-1.0f, std::min(1.0f, steering));
+    acceleration = std::max(-1.0f, std::min(1.0f, acceleration));
+
+    // Apply steering (only when moving)
+    if (std::abs(velocity) > 10.0f)
+    {
+        if (velocity > 0)
+        {
+            rotation += steering * rotationSpeed * 0.016f;
+        }
+        else
+        {
+            rotation -= steering * rotationSpeed * 0.016f;
+        }
+    }
+
+    // Apply acceleration
+    if (acceleration > 0)
+    {
+        // Forward acceleration
+        velocity += acceleration * this->acceleration * 0.016f;
+        if (velocity > maxSpeed)
+            velocity = maxSpeed;
+    }
+    else if (acceleration < 0)
+    {
+        // Braking/reverse
+        velocity += acceleration * this->acceleration * 0.016f;
+        if (velocity < -maxReverseSpeed)
+            velocity = -maxReverseSpeed;
+    }
+    else
+    {
+        // Natural deceleration when no acceleration input
+        if (velocity > 0)
+        {
+            velocity -= deceleration * 0.5f * 0.016f;
+            if (velocity < 0)
+                velocity = 0;
+        }
+        else if (velocity < 0)
+        {
+            velocity += deceleration * 0.5f * 0.016f;
+            if (velocity > 0)
+                velocity = 0;
+        }
+    }
+}
+
+void Car::updateRaySensors(const std::vector<sf::Vector2f> &innerEdgePoints,
+                           const std::vector<sf::Vector2f> &outerEdgePoints)
+{
+    // Update ray positions based on car position and rotation
+    raySensorHandler.updateRays(sf::Vector2f(x, y), rotation);
+
+    // Check for collisions and update ray colors
+    raySensorHandler.checkCollisions(sf::Vector2f(x, y), rotation, innerEdgePoints, outerEdgePoints);
+}
+
+std::vector<float> Car::getRayDistances() const
+{
+    // Return the actual ray lengths from the handler
+    return raySensorHandler.getRayLengths();
+}
+
+void Car::drawRaySensors(sf::RenderWindow &window) const
+{
+    raySensorHandler.draw(window);
+}
+
 void Car::resetPosition()
 {
     // Reset to start position (checkered flag position)
     x = 350.0f;
     y = 230.0f;
-    angle = 0.0f;
+    rotation = 0.0f;
     velocity = 0.0f;
 
     // Update car shape
     carShape.setPosition({x, y});
-    carShape.setRotation(angle);
+    carShape.setRotation(rotation);
 }
 
 sf::FloatRect Car::getGlobalBounds() const
@@ -187,7 +260,7 @@ void Car::handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, cons
             y += normal.y * bounceDistance;
 
             // Calculate reflection using vector math (more robust)
-            float velocityAngle = angle * 3.14159f / 180.0f;
+            float velocityAngle = rotation * 3.14159f / 180.0f;
 
             // Create velocity vector
             sf::Vector2f velocityVector(std::cos(velocityAngle), std::sin(velocityAngle));
@@ -204,7 +277,7 @@ void Car::handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, cons
             float newAngle = newVelocityAngle * 180.0f / 3.14159f;
 
             // Check if the rotation would be too large (more than 90 degrees)
-            float angleDifference = std::abs(newAngle - angle);
+            float angleDifference = std::abs(newAngle - rotation);
             if (angleDifference > 180.0f)
             {
                 angleDifference = 360.0f - angleDifference; // Handle angle wrapping
@@ -213,7 +286,7 @@ void Car::handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, cons
             // Only apply rotation if it's less than 90 degrees
             if (angleDifference < 45.0f)
             {
-                angle = newAngle;
+                rotation = newAngle;
             }
             else
             {
@@ -227,7 +300,7 @@ void Car::handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, cons
 
             // Update car shape
             carShape.setPosition({x, y});
-            carShape.setRotation(angle);
+            carShape.setRotation(rotation);
 
             return; // Only handle one collision per frame
         }
@@ -291,7 +364,7 @@ void Car::handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, cons
             y += normal.y * bounceDistance;
 
             // Calculate reflection using vector math (more robust)
-            float velocityAngle = angle * 3.14159f / 180.0f;
+            float velocityAngle = rotation * 3.14159f / 180.0f;
 
             // Create velocity vector
             sf::Vector2f velocityVector(std::cos(velocityAngle), std::sin(velocityAngle));
@@ -308,7 +381,7 @@ void Car::handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, cons
             float newAngle = newVelocityAngle * 180.0f / 3.14159f;
 
             // Check if the rotation would be too large (more than 90 degrees)
-            float angleDifference = std::abs(newAngle - angle);
+            float angleDifference = std::abs(newAngle - rotation);
             if (angleDifference > 180.0f)
             {
                 angleDifference = 360.0f - angleDifference; // Handle angle wrapping
@@ -317,7 +390,7 @@ void Car::handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, cons
             // Only apply rotation if it's less than 90 degrees
             if (angleDifference < 90.0f)
             {
-                angle = newAngle;
+                rotation = newAngle;
             }
             else
             {
@@ -331,7 +404,7 @@ void Car::handleCollision(const std::vector<sf::Vector2f> &innerEdgePoints, cons
 
             // Update car shape
             carShape.setPosition({x, y});
-            carShape.setRotation(angle);
+            carShape.setRotation(rotation);
 
             return; // Only handle one collision per frame
         }

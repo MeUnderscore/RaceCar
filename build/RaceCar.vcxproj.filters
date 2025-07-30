@@ -22,6 +22,12 @@
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\CarShape.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\RaySensor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Car\RaySensorHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Timer\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
