@@ -5,8 +5,8 @@ Car::Car(float startX, float startY, float carWidth, float carHeight)
     : x(startX), y(startY), velocity(0.0f), rotation(0.0f), acceleration(500.0f), steering(0.0f),
       carShape(carWidth, carHeight), maxSpeed(500.0f), maxReverseSpeed(150.0f), deceleration(300.0f), rotationSpeed(180.0f)
 {
-    // Initialize the neural network brain with 16 inputs (ray sensors), 2 outputs (steering, acceleration), 4 hidden nodes
-    brain.initializeSimple(16, 2, 4);
+    // Initialize the neural network brain with 18 inputs (16 ray sensors + speed + rotation), 2 outputs (steering, acceleration), 4 hidden nodes
+    brain.initializeSimple(18, 2, 4);
 
     // RaySensorHandler is automatically initialized in the constructor
     std::cout << "Car initialized with RaySensorHandler" << std::endl;

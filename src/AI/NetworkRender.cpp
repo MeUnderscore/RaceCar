@@ -43,8 +43,8 @@ void NetworkRender::createNodeVisuals(const NeuralNetwork &network)
     // For now, we'll create a simple visualization with default values
     // In the future, we'll need to add getters to NeuralNetwork to access node data
 
-    // Create input nodes (assuming 16 inputs for ray sensors)
-    for (int i = 0; i < 16; ++i)
+    // Create input nodes (18 inputs: 16 ray sensors + speed + rotation)
+    for (int i = 0; i < 18; ++i)
     {
         NodeVisual node;
         node.shape.setRadius(nodeRadius);
@@ -69,7 +69,7 @@ void NetworkRender::createNodeVisuals(const NeuralNetwork &network)
         node.shape.setOutlineColor(sf::Color::Black);
         node.shape.setOutlineThickness(2.0f);
 
-        node.nodeId = 16 + i; // Start after input nodes
+        node.nodeId = 18 + i; // Start after input nodes
         node.isInput = false;
         node.isOutput = false;
         node.isHidden = true;
@@ -86,7 +86,7 @@ void NetworkRender::createNodeVisuals(const NeuralNetwork &network)
         node.shape.setOutlineColor(sf::Color::Black);
         node.shape.setOutlineThickness(2.0f);
 
-        node.nodeId = 20 + i; // Start after hidden nodes
+        node.nodeId = 22 + i; // Start after hidden nodes
         node.isInput = false;
         node.isOutput = true;
         node.isHidden = false;
@@ -98,7 +98,7 @@ void NetworkRender::createNodeVisuals(const NeuralNetwork &network)
 void NetworkRender::createConnectionVisuals(const NeuralNetwork &network)
 {
     // Create connections from inputs to hidden nodes
-    for (int input = 0; input < 16; ++input)
+    for (int input = 0; input < 18; ++input)
     {
         for (int hidden = 0; hidden < 4; ++hidden)
         {
@@ -107,7 +107,7 @@ void NetworkRender::createConnectionVisuals(const NeuralNetwork &network)
             conn.shape.setFillColor(connectionColor);
 
             conn.fromNode = input;
-            conn.toNode = 16 + hidden;
+            conn.toNode = 18 + hidden;
             conn.weight = 0.1; // Default weight
 
             connections.push_back(conn);
@@ -123,8 +123,8 @@ void NetworkRender::createConnectionVisuals(const NeuralNetwork &network)
             conn.shape.setSize(sf::Vector2f(connectionWidth, 0)); // Will be set in layoutConnections
             conn.shape.setFillColor(connectionColor);
 
-            conn.fromNode = 16 + hidden;
-            conn.toNode = 20 + output;
+            conn.fromNode = 18 + hidden;
+            conn.toNode = 22 + output;
             conn.weight = 0.1; // Default weight
 
             connections.push_back(conn);
@@ -137,13 +137,13 @@ void NetworkRender::layoutNodes()
     float currentX = position.x + 30.0f; // Start with some margin
 
     // Calculate total height for each layer to center vertically
-    float totalInputHeight = 15 * nodeSpacing; // 16 nodes = 15 gaps
-    float totalHiddenHeight = 3 * nodeSpacing;  // 4 nodes = 3 gaps
-    float totalOutputHeight = 1 * nodeSpacing;  // 2 nodes = 1 gap
+    float totalInputHeight = 17 * nodeSpacing; // 18 nodes = 17 gaps
+    float totalHiddenHeight = 3 * nodeSpacing; // 4 nodes = 3 gaps
+    float totalOutputHeight = 1 * nodeSpacing; // 2 nodes = 1 gap
 
     // Layout input nodes (vertical column, centered)
     float inputY = position.y + (size.y - totalInputHeight) / 2.0f;
-    for (int i = 0; i < 16; ++i)
+    for (int i = 0; i < 18; ++i)
     {
         if (i < nodes.size())
         {
@@ -156,9 +156,9 @@ void NetworkRender::layoutNodes()
     float hiddenY = position.y + (size.y - totalHiddenHeight) / 2.0f;
     for (int i = 0; i < 4; ++i)
     {
-        if (16 + i < nodes.size())
+        if (18 + i < nodes.size())
         {
-            nodes[16 + i].shape.setPosition(sf::Vector2f(currentX, hiddenY + i * nodeSpacing));
+            nodes[18 + i].shape.setPosition(sf::Vector2f(currentX, hiddenY + i * nodeSpacing));
         }
     }
 
@@ -167,9 +167,9 @@ void NetworkRender::layoutNodes()
     float outputY = position.y + (size.y - totalOutputHeight) / 2.0f;
     for (int i = 0; i < 2; ++i)
     {
-        if (20 + i < nodes.size())
+        if (22 + i < nodes.size())
         {
-            nodes[20 + i].shape.setPosition(sf::Vector2f(currentX, outputY + i * nodeSpacing));
+            nodes[22 + i].shape.setPosition(sf::Vector2f(currentX, outputY + i * nodeSpacing));
         }
     }
 }
@@ -203,8 +203,6 @@ void NetworkRender::layoutConnections()
         conn.shape.setSize(sf::Vector2f(length, connectionWidth));
         conn.shape.setPosition(fromPos);
         conn.shape.setRotation(sf::degrees(angle));
-
-
     }
 }
 
@@ -222,8 +220,6 @@ sf::Color NetworkRender::getWeightColor(double weight) const
         return sf::Color(0, 255, 0, static_cast<unsigned char>(intensity * 255));
     }
 }
-
-
 
 void NetworkRender::setPosition(float x, float y)
 {
@@ -315,8 +311,6 @@ void NetworkRender::setConnectionColor(const sf::Color &color)
         conn.shape.setFillColor(color);
     }
 }
-
-
 
 void NetworkRender::draw(sf::RenderWindow &window) const
 {

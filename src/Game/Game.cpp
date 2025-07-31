@@ -65,10 +65,10 @@ Game::Game(unsigned int width, unsigned int height)
         fpsText->setOutlineColor(sf::Color::Black);
         fpsText->setOutlineThickness(1.0f);
     }
-    
+
     // Initialize network visualization
     networkRenderHandler = std::make_unique<NetworkRenderHandler>();
-    networkRenderHandler->setDisplayPosition(50.0f, 50.0f);
+    networkRenderHandler->setDisplayPosition(20.0f, 800.0f);
     networkRenderHandler->setDisplaySize(400.0f, 300.0f);
     networkRenderHandler->setVisible(true); // Start visible for testing
 }
@@ -181,7 +181,7 @@ void Game::update()
     // Update UI manager
     sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
     uiManager->update(mousePos);
-    
+
     // Update network visualization
     if (networkRenderHandler)
     {
@@ -220,7 +220,7 @@ void Game::render()
 
     // Draw performance stats
     drawPerformanceStats();
-    
+
     // Draw network visualization
     if (networkRenderHandler)
     {
