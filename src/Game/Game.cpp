@@ -1,8 +1,18 @@
 #include "Game.h"
+#include "../Background/Background.h"
+#include "../Track/track.h"
+#include "../Car/Car.h"
+#include "../Timer/TimerLogic.h"
+#include "../Timer/TimerRenderer.h"
+#include "../Checkpoint/CheckpointHandler.h"
+#include "../Checkpoint/CheckpointUIRenderer.h"
+#include "../UI/UIManager.h"
+#include "../AI/NetworkRenderHandler.h"
 #include <iostream>
 
 Game::Game(unsigned int width, unsigned int height)
-    : deltaTime(0.016f), previousCarPosition(350.0f, 230.0f) // Default to 60 FPS
+    : deltaTime(0.016f), fps(60.0f), frameCount(0), performanceFontLoaded(false),
+      fpsText(nullptr), previousCarPosition(350.0f, 230.0f) // Default to 60 FPS
 {
     // Create window
     window = std::make_unique<sf::RenderWindow>(sf::VideoMode({width, height}), "Race Car");
@@ -45,10 +55,30 @@ Game::Game(unsigned int width, unsigned int height)
                                    std::cout << "Save button clicked!" << std::endl;
                                    // TODO: Save AI training data
                                });
+
+    // Initialize performance monitoring
+    if (performanceFont.openFromFile("../../Fonts/ARIAL.TTF"))
+    {
+        performanceFontLoaded = true;
+        fpsText = new sf::Text(performanceFont, "", 12);
+        fpsText->setFillColor(sf::Color::Yellow);
+        fpsText->setOutlineColor(sf::Color::Black);
+        fpsText->setOutlineThickness(1.0f);
+    }
+    
+    // Initialize network visualization
+    networkRenderHandler = std::make_unique<NetworkRenderHandler>();
+    networkRenderHandler->setDisplayPosition(50.0f, 50.0f);
+    networkRenderHandler->setDisplaySize(400.0f, 300.0f);
+    networkRenderHandler->setVisible(true); // Start visible for testing
 }
 
 Game::~Game()
 {
+    if (fpsText)
+    {
+        delete fpsText;
+    }
 }
 
 void Game::run()
@@ -100,7 +130,7 @@ void Game::handleEvents()
             view.setCenter({static_cast<float>(newWidth) / 2.0f, static_cast<float>(newHeight) / 2.0f});
             window->setView(view);
         }
-        
+
         // Handle UI events
         sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
         uiManager->handleEvent(*event, mousePos);
@@ -111,6 +141,9 @@ void Game::update()
 {
     // Calculate delta time for smooth movement
     deltaTime = deltaClock.restart().asSeconds();
+
+    // Update performance statistics
+    updatePerformanceStats();
 
     // Store previous car position for collision detection
     previousCarPosition = sf::Vector2f(car->getX(), car->getY());
@@ -142,12 +175,19 @@ void Game::update()
     // Update timer
     timerLogic->update();
 
-        // Update UI
+    // Update UI
     checkpointUIRenderer->updateText();
-    
+
     // Update UI manager
     sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
     uiManager->update(mousePos);
+    
+    // Update network visualization
+    if (networkRenderHandler)
+    {
+        networkRenderHandler->setNetwork(&car->getBrain());
+        networkRenderHandler->update();
+    }
 }
 
 void Game::render()
@@ -171,12 +211,21 @@ void Game::render()
     // Draw checkpoints
     checkpointHandler->drawCheckpoints(*window);
 
-        // Draw UI
+    // Draw UI
     timerRenderer->draw(*window);
     checkpointUIRenderer->draw(*window);
-    
+
     // Draw UI manager (buttons)
     uiManager->draw(*window);
+
+    // Draw performance stats
+    drawPerformanceStats();
+    
+    // Draw network visualization
+    if (networkRenderHandler)
+    {
+        networkRenderHandler->draw(*window);
+    }
 
     window->display();
 }
@@ -207,4 +256,42 @@ bool Game::isRunning() const
 bool Game::isLapCompleted() const
 {
     return checkpointHandler->isLapCompleted();
+}
+
+void Game::updatePerformanceStats()
+{
+    frameCount++;
+
+    // Update FPS every second
+    if (fpsClock.getElapsedTime().asSeconds() >= 1.0f)
+    {
+        fps = static_cast<float>(frameCount) / fpsClock.getElapsedTime().asSeconds();
+        frameCount = 0;
+        fpsClock.restart();
+    }
+}
+
+void Game::drawPerformanceStats()
+{
+    if (!performanceFontLoaded || !fpsText)
+        return;
+
+    try
+    {
+        // Position in top-right corner, moved further left to avoid checkpoint overlap
+        float windowWidth = static_cast<float>(window->getSize().x);
+        fpsText->setPosition(sf::Vector2f(windowWidth - 350.0f, 10.0f));
+
+        // Update text content
+        std::string fpsString = "FPS: " + std::to_string(static_cast<int>(fps));
+        std::string frameTimeString = "Frame: " + std::to_string(static_cast<int>(deltaTime * 1000.0f)) + "ms";
+
+        fpsText->setString(fpsString + "\n" + frameTimeString);
+
+        window->draw(*fpsText);
+    }
+    catch (...)
+    {
+        // Silently fail if text rendering fails
+    }
 }

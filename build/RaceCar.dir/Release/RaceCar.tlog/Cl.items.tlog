@@ -16,5 +16,10 @@ C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Checkpoint\CheckpointUIRend
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\Game\Game.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\Game.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\NeuralNetwork.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\NeuralNetwork.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\AIController.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\AIController.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\InnovationTracker.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\InnovationTracker.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\Species.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\Species.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\Population.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\Population.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\NetworkRender.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\NetworkRender.obj
+C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\AI\NetworkRenderHandler.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\NetworkRenderHandler.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\UI\Button.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\Button.obj
 C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\src\UI\UIManager.cpp;C:\Users\bkimb\OneDrive\Documents\GitHub\RaceCar\build\RaceCar.dir\Release\UIManager.obj

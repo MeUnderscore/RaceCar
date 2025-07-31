@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "CarShape.h"
 #include "RaySensorHandler.h"
+#include "../AI/NeuralNetwork.h"
 #include <vector>
 #include "../Interfaces/IRenderable.h"
 
@@ -23,6 +24,9 @@ private:
 
     // Ray sensor handler for AI
     RaySensorHandler raySensorHandler;
+
+    // Neural network brain for AI
+    NeuralNetwork brain;
 
 public:
     Car(float startX, float startY, float carWidth = 20.0f, float carHeight = 10.0f);
@@ -58,4 +62,8 @@ public:
 
     // Get global bounds for collision detection
     sf::FloatRect getGlobalBounds() const;
+
+    // Neural network brain access
+    const NeuralNetwork &getBrain() const { return brain; }
+    NeuralNetwork &getBrain() { return brain; }
 };

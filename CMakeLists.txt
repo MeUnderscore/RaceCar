@@ -29,6 +29,11 @@ add_executable(RaceCar
     src/Game/Game.cpp
     src/AI/NeuralNetwork.cpp
     src/AI/AIController.cpp
+    src/AI/InnovationTracker.cpp
+    src/AI/Species.cpp
+    src/AI/Population.cpp
+    src/AI/NetworkRender.cpp
+    src/AI/NetworkRenderHandler.cpp
     src/UI/Button.cpp
     src/UI/UIManager.cpp
 )

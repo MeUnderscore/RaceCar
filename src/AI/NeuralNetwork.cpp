@@ -1,10 +1,24 @@
 #include "NeuralNetwork.h"
+#include "InnovationTracker.h"
 #include <algorithm>
 #include <cmath>
 #include <random>
 
-NeuralNetwork::NeuralNetwork()
+// Static member initialization
+std::shared_ptr<InnovationTracker> NeuralNetwork::innovationTracker = nullptr;
+
+NeuralNetwork::NeuralNetwork() : nextNodeId(0)
 {
+}
+
+void NeuralNetwork::setInnovationTracker(std::shared_ptr<InnovationTracker> tracker)
+{
+    innovationTracker = tracker;
+}
+
+std::shared_ptr<InnovationTracker> NeuralNetwork::getInnovationTracker()
+{
+    return innovationTracker;
 }
 
 void NeuralNetwork::initializeSimple(int numInputs, int numOutputs, int numHidden)
@@ -71,6 +85,9 @@ void NeuralNetwork::initializeSimple(int numInputs, int numOutputs, int numHidde
             }
         }
     }
+
+    // Set next node ID for future additions
+    nextNodeId = nodes.size();
 }
 
 std::vector<double> NeuralNetwork::process(const std::vector<double> &inputs)
@@ -148,14 +165,22 @@ void NeuralNetwork::addNode(int nodeId, double bias)
 
 void NeuralNetwork::addConnection(int fromNode, int toNode, double weight, bool enabled)
 {
-    static int innovationCounter = 0;
-
     Connection conn;
     conn.fromNode = fromNode;
     conn.toNode = toNode;
     conn.weight = weight;
     conn.enabled = enabled;
-    conn.innovationNumber = innovationCounter++;
+
+    // Use innovation tracker if available
+    if (innovationTracker)
+    {
+        conn.innovationNumber = innovationTracker->getInnovationNumber(fromNode, toNode, false);
+    }
+    else
+    {
+        static int innovationCounter = 0;
+        conn.innovationNumber = innovationCounter++;
+    }
 
     connections.push_back(conn);
 }
@@ -190,9 +215,61 @@ void NeuralNetwork::mutateBias()
     }
 }
 
+bool NeuralNetwork::connectionExists(int fromNode, int toNode) const
+{
+    for (const auto &conn : connections)
+    {
+        if (conn.fromNode == fromNode && conn.toNode == toNode)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+std::vector<int> NeuralNetwork::getConnectableNodes(int fromNode) const
+{
+    std::vector<int> connectable;
+
+    // Can connect to any node that's not an input node (to avoid cycles)
+    for (const auto &node : nodes)
+    {
+        if (node.id != fromNode &&
+            std::find(inputNodes.begin(), inputNodes.end(), node.id) == inputNodes.end())
+        {
+            connectable.push_back(node.id);
+        }
+    }
+
+    return connectable;
+}
+
+int NeuralNetwork::getRandomNode() const
+{
+    if (nodes.empty())
+        return -1;
+
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, nodes.size() - 1);
+
+    return nodes[dis(gen)].id;
+}
+
+int NeuralNetwork::getRandomHiddenNode() const
+{
+    if (hiddenNodes.empty())
+        return -1;
+
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    std::uniform_int_distribution<> dis(0, hiddenNodes.size() - 1);
+
+    return hiddenNodes[dis(gen)];
+}
+
 void NeuralNetwork::mutateAddConnection()
 {
-    // Simple implementation - add a random connection
     static std::random_device rd;
     static std::mt19937 gen(rd());
     static std::uniform_real_distribution<> weightDis(-1.0, 1.0);
@@ -200,20 +277,32 @@ void NeuralNetwork::mutateAddConnection()
     if (nodes.size() < 2)
         return;
 
-    std::uniform_int_distribution<> nodeDis(0, nodes.size() - 1);
-    int fromNode = nodeDis(gen);
-    int toNode = nodeDis(gen);
+    // Try to find a valid connection that doesn't exist
+    int attempts = 0;
+    const int maxAttempts = 20;
 
-    // Don't connect a node to itself
-    if (fromNode != toNode)
+    while (attempts < maxAttempts)
     {
-        addConnection(fromNode, toNode, weightDis(gen));
+        int fromNode = getRandomNode();
+        std::vector<int> connectable = getConnectableNodes(fromNode);
+
+        if (!connectable.empty())
+        {
+            std::uniform_int_distribution<> toDis(0, connectable.size() - 1);
+            int toNode = connectable[toDis(gen)];
+
+            if (!connectionExists(fromNode, toNode))
+            {
+                addConnection(fromNode, toNode, weightDis(gen));
+                return;
+            }
+        }
+        attempts++;
     }
 }
 
 void NeuralNetwork::mutateAddNode()
 {
-    // Simple implementation - add a hidden node
     if (connections.empty())
         return;
 
@@ -228,13 +317,119 @@ void NeuralNetwork::mutateAddNode()
     conn.enabled = false;
 
     // Add new hidden node
-    int newNodeId = nodes.size();
+    int newNodeId = nextNodeId++;
     addNode(newNodeId);
     hiddenNodes.push_back(newNodeId);
 
-    // Add connections to and from the new node
-    addConnection(conn.fromNode, newNodeId, 1.0);
-    addConnection(newNodeId, conn.toNode, conn.weight);
+    // Add connections to and from the new node with innovation tracking
+    if (innovationTracker)
+    {
+        // Get innovation numbers for the new connections
+        int inno1 = innovationTracker->getInnovationNumber(conn.fromNode, newNodeId, false);
+        int inno2 = innovationTracker->getInnovationNumber(newNodeId, conn.toNode, false);
+
+        // Add the connections with proper innovation numbers
+        Connection newConn1;
+        newConn1.fromNode = conn.fromNode;
+        newConn1.toNode = newNodeId;
+        newConn1.weight = 1.0;
+        newConn1.enabled = true;
+        newConn1.innovationNumber = inno1;
+        connections.push_back(newConn1);
+
+        Connection newConn2;
+        newConn2.fromNode = newNodeId;
+        newConn2.toNode = conn.toNode;
+        newConn2.weight = conn.weight;
+        newConn2.enabled = true;
+        newConn2.innovationNumber = inno2;
+        connections.push_back(newConn2);
+    }
+    else
+    {
+        // Fallback to simple connection addition
+        addConnection(conn.fromNode, newNodeId, 1.0);
+        addConnection(newNodeId, conn.toNode, conn.weight);
+    }
+}
+
+double NeuralNetwork::calculateDistance(const NeuralNetwork &other) const
+{
+    // NEAT distance calculation parameters
+    const double c1 = 1.0; // Weight for excess connections
+    const double c2 = 1.0; // Weight for disjoint connections
+    const double c3 = 0.4; // Weight for connection weights
+    const double N = 1.0;  // Normalization factor (max number of connections)
+
+    int excess = 0;
+    int disjoint = 0;
+    double weightDiff = 0.0;
+    int matchingConnections = 0;
+
+    // Find the highest innovation number in both networks
+    int maxInnovation1 = -1;
+    int maxInnovation2 = -1;
+
+    for (const auto &conn : connections)
+    {
+        if (conn.innovationNumber > maxInnovation1)
+            maxInnovation1 = conn.innovationNumber;
+    }
+
+    for (const auto &conn : other.connections)
+    {
+        if (conn.innovationNumber > maxInnovation2)
+            maxInnovation2 = conn.innovationNumber;
+    }
+
+    // Count excess and disjoint connections
+    for (const auto &conn1 : connections)
+    {
+        bool found = false;
+        for (const auto &conn2 : other.connections)
+        {
+            if (conn1.innovationNumber == conn2.innovationNumber)
+            {
+                found = true;
+                matchingConnections++;
+                weightDiff += std::abs(conn1.weight - conn2.weight);
+                break;
+            }
+        }
+
+        if (!found)
+        {
+            if (conn1.innovationNumber > maxInnovation2)
+                excess++;
+            else
+                disjoint++;
+        }
+    }
+
+    // Count disjoint connections in the other network
+    for (const auto &conn2 : other.connections)
+    {
+        bool found = false;
+        for (const auto &conn1 : connections)
+        {
+            if (conn2.innovationNumber == conn1.innovationNumber)
+            {
+                found = true;
+                break;
+            }
+        }
+
+        if (!found && conn2.innovationNumber <= maxInnovation1)
+            disjoint++;
+    }
+
+    // Calculate normalized distance
+    double distance = (c1 * excess + c2 * disjoint) / N;
+
+    if (matchingConnections > 0)
+        distance += c3 * (weightDiff / matchingConnections);
+
+    return distance;
 }
 
 NeuralNetwork NeuralNetwork::crossover(const NeuralNetwork &other) const

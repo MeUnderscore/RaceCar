@@ -1,6 +1,10 @@
 #pragma once
 #include <vector>
 #include <random>
+#include <memory>
+
+// Forward declaration
+class InnovationTracker;
 
 class NeuralNetwork
 {
@@ -27,6 +31,10 @@ private:
     std::vector<int> inputNodes;
     std::vector<int> outputNodes;
     std::vector<int> hiddenNodes;
+    
+    // NEAT-specific members
+    static std::shared_ptr<InnovationTracker> innovationTracker;
+    int nextNodeId;
 
 public:
     NeuralNetwork();
@@ -40,6 +48,15 @@ public:
     // Genetic operations
     void mutate();
     NeuralNetwork crossover(const NeuralNetwork &other) const;
+    
+    // NEAT-specific operations
+    void mutateAddConnection();
+    void mutateAddNode();
+    double calculateDistance(const NeuralNetwork &other) const;
+    
+    // Innovation tracker management
+    static void setInnovationTracker(std::shared_ptr<InnovationTracker> tracker);
+    static std::shared_ptr<InnovationTracker> getInnovationTracker();
 
     // Getters
     int getNumInputs() const { return inputNodes.size(); }
@@ -50,6 +67,10 @@ private:
     void addConnection(int fromNode, int toNode, double weight, bool enabled = true);
     void mutateWeights();
     void mutateBias();
-    void mutateAddConnection();
-    void mutateAddNode();
+    
+    // NEAT-specific helper methods
+    bool connectionExists(int fromNode, int toNode) const;
+    std::vector<int> getConnectableNodes(int fromNode) const;
+    int getRandomNode() const;
+    int getRandomHiddenNode() const;
 };

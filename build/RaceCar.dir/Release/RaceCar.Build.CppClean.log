@@ -1,4 +1,5 @@
-c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\button.obj
+c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\species.obj
+c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\innovationtracker.obj
 c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\aicontroller.obj
 c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\neuralnetwork.obj
 c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\game.obj
@@ -18,6 +19,10 @@ c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\track
 c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\background.obj
 c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\main.obj
 c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\uimanager.obj
+c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\button.obj
+c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\networkrenderhandler.obj
+c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\networkrender.obj
+c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\population.obj
 c:\users\bkimb\onedrive\documents\github\racecar\build\cmakefiles\generate.stamp
 c:\users\bkimb\onedrive\documents\github\racecar\build\release\racecar.exe
 c:\users\bkimb\onedrive\documents\github\racecar\build\racecar.dir\release\racecar.tlog\cl.command.1.tlog

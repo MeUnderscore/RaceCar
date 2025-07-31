@@ -31,19 +31,19 @@ void UIManager::initialize()
 
     // Start button (Green)
     std::cout << "Creating Start button..." << std::endl;
-    buttons.emplace_back("", 10, 10, 80, 30); // Empty label since we'll use separate text
+    buttons.emplace_back("", 10.0f, 10.0f, 80.0f, 30.0f); // Empty label since we'll use separate text
     std::cout << "Start button created, setting colors..." << std::endl;
     buttons[0].setColors(sf::Color(50, 150, 50), sf::Color(70, 170, 70), sf::Color(30, 130, 30));
 
     // Pause button (Red)
     std::cout << "Creating Pause button..." << std::endl;
-    buttons.emplace_back("", 100, 10, 80, 30); // Empty label since we'll use separate text
+    buttons.emplace_back("", 100.0f, 10.0f, 80.0f, 30.0f); // Empty label since we'll use separate text
     std::cout << "Pause button created, setting colors..." << std::endl;
     buttons[1].setColors(sf::Color(150, 50, 50), sf::Color(170, 70, 70), sf::Color(130, 30, 30));
 
     // Save button (Blue)
     std::cout << "Creating Save button..." << std::endl;
-    buttons.emplace_back("", 190, 10, 80, 30); // Empty label since we'll use separate text
+    buttons.emplace_back("", 190.0f, 10.0f, 80.0f, 30.0f); // Empty label since we'll use separate text
     std::cout << "Save button created, setting colors..." << std::endl;
     buttons[2].setColors(sf::Color(50, 50, 150), sf::Color(70, 70, 170), sf::Color(30, 30, 130));
 
