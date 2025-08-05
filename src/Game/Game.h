@@ -78,6 +78,7 @@ public:
     void evolvePopulation();
     void resetAICars();
     void updateAICars(float deltaTime);
+    float calculateMaxGenerationTime() const;
     bool allAICarsFinished() const;
     bool checkCarStuck(const Car& car) const;
     bool checkCarCrashed(const Car& car) const;

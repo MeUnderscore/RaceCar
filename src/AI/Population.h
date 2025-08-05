@@ -56,6 +56,7 @@ public:
     void setWeightMutationRate(double rate) { weightMutationRate = rate; }
     void setAddConnectionRate(double rate) { addConnectionRate = rate; }
     void setAddNodeRate(double rate) { addNodeRate = rate; }
+    void setBestFitness(double fitness) { bestFitness = fitness; }
     
     // Statistics
     void printStatistics() const;

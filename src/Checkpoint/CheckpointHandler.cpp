@@ -286,10 +286,6 @@ void CheckpointHandler::checkCarPositionWithLine(int carId, const sf::Vector2f &
                 checkpoint->markAsHit();
                 progress.hitCheckpoints++;
                 checkpointHit = true;
-
-                // Debug output
-                std::cout << "Car " << carId << " hit checkpoint " << (progress.hitCheckpoints - 1)
-                          << " (total: " << progress.hitCheckpoints << "/" << totalCheckpoints << ")" << std::endl;
             }
         }
     }
@@ -302,7 +298,6 @@ void CheckpointHandler::checkCarPositionWithLine(int carId, const sf::Vector2f &
         {
             finalCheckpoint->markAsHit();
             progress.lapCompleted = true;
-            std::cout << "Car " << carId << " completed lap!" << std::endl;
         }
     }
 }

@@ -35,6 +35,7 @@ void NeuralNetwork::initializeSimple(int numInputs, int numOutputs, int numHidde
     static std::mt19937 gen(rd());
     static std::uniform_real_distribution<> weightDis(-1.0, 1.0);
     static std::uniform_real_distribution<> biasDis(-0.5, 0.5);
+    static std::uniform_real_distribution<> probDis(0.0, 1.0);
 
     // Create input nodes
     for (int i = 0; i < numInputs; ++i)
@@ -44,27 +45,85 @@ void NeuralNetwork::initializeSimple(int numInputs, int numOutputs, int numHidde
         inputNodes.push_back(nodeId);
     }
 
-    // Create output nodes (no hidden nodes initially)
-    for (int i = 0; i < numOutputs; ++i)
+    // Randomly add 0-3 hidden nodes for structural diversity
+    int randomHiddenNodes = static_cast<int>(probDis(gen) * 4); // 0, 1, 2, or 3 hidden nodes
+
+    // Create hidden nodes (if any)
+    for (int i = 0; i < randomHiddenNodes; ++i)
     {
         int nodeId = numInputs + i;
+        addNode(nodeId, biasDis(gen)); // Random bias
+        hiddenNodes.push_back(nodeId);
+    }
+
+    // Create output nodes
+    for (int i = 0; i < numOutputs; ++i)
+    {
+        int nodeId = numInputs + randomHiddenNodes + i;
         addNode(nodeId, biasDis(gen)); // Random bias
         outputNodes.push_back(nodeId);
     }
 
-    // Create direct connections from inputs to outputs (basic structure)
-    for (int input : inputNodes)
+    // Create connections with structural randomness
+    if (randomHiddenNodes == 0)
     {
-        for (int output : outputNodes)
+        // Direct connections from inputs to outputs (basic structure)
+        for (int input : inputNodes)
         {
-            addConnection(input, output, weightDis(gen)); // Random weight
+            for (int output : outputNodes)
+            {
+                // 80% chance to add each connection
+                if (probDis(gen) < 0.8)
+                {
+                    addConnection(input, output, weightDis(gen)); // Random weight
+                }
+            }
+        }
+    }
+    else
+    {
+        // Connections from inputs to hidden nodes
+        for (int input : inputNodes)
+        {
+            for (int hidden : hiddenNodes)
+            {
+                // 70% chance to add each connection
+                if (probDis(gen) < 0.7)
+                {
+                    addConnection(input, hidden, weightDis(gen)); // Random weight
+                }
+            }
+        }
+
+        // Connections from hidden nodes to outputs
+        for (int hidden : hiddenNodes)
+        {
+            for (int output : outputNodes)
+            {
+                // 80% chance to add each connection
+                if (probDis(gen) < 0.8)
+                {
+                    addConnection(hidden, output, weightDis(gen)); // Random weight
+                }
+            }
+        }
+
+        // Some direct connections from inputs to outputs (skip hidden layer)
+        for (int input : inputNodes)
+        {
+            for (int output : outputNodes)
+            {
+                // 30% chance to add direct connection
+                if (probDis(gen) < 0.3)
+                {
+                    addConnection(input, output, weightDis(gen)); // Random weight
+                }
+            }
         }
     }
 
     // Set next node ID for future additions
     nextNodeId = nodes.size();
-
-    std::cout << "Initialized basic neural network: " << numInputs << " inputs -> " << numOutputs << " outputs (no hidden layers)" << std::endl;
 }
 
 std::vector<double> NeuralNetwork::process(const std::vector<double> &inputs)
@@ -271,7 +330,6 @@ void NeuralNetwork::mutateAddConnection()
             if (!connectionExists(fromNode, toNode))
             {
                 addConnection(fromNode, toNode, weightDis(gen));
-                std::cout << "Added connection: " << fromNode << " -> " << toNode << std::endl;
                 return;
             }
         }
@@ -298,8 +356,6 @@ void NeuralNetwork::mutateAddNode()
     int newNodeId = nextNodeId++;
     addNode(newNodeId);
     hiddenNodes.push_back(newNodeId);
-
-    std::cout << "Added hidden node: " << newNodeId << " (total hidden nodes: " << hiddenNodes.size() << ")" << std::endl;
 
     // Add connections to and from the new node with innovation tracking
     if (innovationTracker)

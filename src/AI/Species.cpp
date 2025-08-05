@@ -34,7 +34,7 @@ bool Species::belongsToSpecies(const NeuralNetwork &network, double compatibilit
     return distance <= compatibilityThreshold;
 }
 
-void Species::calculateAdjustedFitness()
+void Species::calculateAdjustedFitness(const std::vector<std::shared_ptr<AIController>> &controllers)
 {
     if (members.empty())
     {
@@ -43,23 +43,32 @@ void Species::calculateAdjustedFitness()
         return;
     }
 
-    // Calculate average fitness
+    // Calculate average fitness using actual controller fitness values
     double totalFitness = 0.0;
     bestFitness = 0.0;
+    int validMembers = 0;
 
     for (const auto &member : members)
     {
-        // For now, we'll use a placeholder fitness value
-        // In the actual implementation, this would come from the AIController
-        // The fitness should be stored in the NeuralNetwork or passed from Population
-        double fitness = 0.0; // This will be set by Population when it has access to AIController fitness
+        // Find the corresponding controller for this neural network
+        double fitness = 0.0;
+        for (const auto &controller : controllers)
+        {
+            if (controller->getBrain().calculateDistance(*member) < 0.1) // Small threshold for matching
+            {
+                fitness = controller->getFitness();
+                break;
+            }
+        }
+
         totalFitness += fitness;
+        validMembers++;
 
         if (fitness > bestFitness)
             bestFitness = fitness;
     }
 
-    averageFitness = totalFitness / members.size();
+    averageFitness = validMembers > 0 ? totalFitness / validMembers : 0.0;
 }
 
 void Species::updateStaleness()
@@ -67,7 +76,7 @@ void Species::updateStaleness()
     staleness++;
 }
 
-std::shared_ptr<NeuralNetwork> Species::selectParent() const
+std::shared_ptr<NeuralNetwork> Species::selectParent(const std::vector<std::shared_ptr<AIController>> &controllers) const
 {
     if (members.empty())
         return nullptr;
@@ -84,8 +93,17 @@ std::shared_ptr<NeuralNetwork> Species::selectParent() const
     for (int i = 0; i < tournamentSize; ++i)
     {
         int index = dis(gen);
-        // Fitness will be set by Population when it has access to AIController fitness
-        double fitness = 0.0; // Placeholder - will be set by Population
+
+        // Find the corresponding controller for this neural network
+        double fitness = 0.0;
+        for (const auto &controller : controllers)
+        {
+            if (controller->getBrain().calculateDistance(*members[index]) < 0.1) // Small threshold for matching
+            {
+                fitness = controller->getFitness();
+                break;
+            }
+        }
 
         if (fitness > bestFitness)
         {
@@ -97,7 +115,7 @@ std::shared_ptr<NeuralNetwork> Species::selectParent() const
     return best ? best : members[0];
 }
 
-std::shared_ptr<NeuralNetwork> Species::reproduce() const
+std::shared_ptr<NeuralNetwork> Species::reproduce(const std::vector<std::shared_ptr<AIController>> &controllers) const
 {
     if (members.empty())
         return nullptr;
@@ -111,8 +129,8 @@ std::shared_ptr<NeuralNetwork> Species::reproduce() const
     }
 
     // Select two parents
-    auto parent1 = selectParent();
-    auto parent2 = selectParent();
+    auto parent1 = selectParent(controllers);
+    auto parent2 = selectParent(controllers);
 
     if (!parent1 || !parent2)
         return nullptr;

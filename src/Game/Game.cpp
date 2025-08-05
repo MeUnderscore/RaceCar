@@ -157,7 +157,7 @@ void Game::update()
     // Calculate delta time
     deltaTime = deltaClock.restart().asSeconds();
 
-    // Update performance statistics
+    // Update performance stats
     updatePerformanceStats();
 
     // Update timer
@@ -174,7 +174,6 @@ void Game::update()
     if (aiLearningEnabled)
     {
         updateAICars(deltaTime);
-        updateNetworkVisualization();
     }
 }
 
@@ -344,8 +343,11 @@ void Game::startAILearning()
     // Reset checkpoints for new generation
     checkpointHandler->resetAllCarProgress();
 
+    // Update network visualization to show initial structure
+    updateNetworkVisualization();
+
     std::cout << "=== AI LEARNING SIMULATION STARTED ===" << std::endl;
-    std::cout << "Generation: " << currentGeneration << " (20s limit per generation)" << std::endl;
+    std::cout << "Generation: " << currentGeneration << " (max " << std::fixed << std::setprecision(1) << calculateMaxGenerationTime() << "s per generation)" << std::endl;
     std::cout << "Population Size: " << aiCars.size() << " cars" << std::endl;
     std::cout << "Press the buttons to control the simulation." << std::endl;
 }
@@ -375,10 +377,49 @@ void Game::loadAITrainingData()
     std::cout << "AI training data loaded!" << std::endl;
 }
 
+float Game::calculateMaxGenerationTime() const
+{
+    // Dynamic generation time based on generation number
+    if (currentGeneration < 25)
+        return 5.0f; // 5 seconds for generations 0-24
+    else if (currentGeneration < 50)
+        return 10.0f; // 10 seconds for generations 25-49
+    else if (currentGeneration < 75)
+        return 15.0f; // 15 seconds for generations 50-74
+    else
+        return 20.0f; // 20 seconds for generations 75+
+}
+
 void Game::evolvePopulation()
 {
     if (!aiPopulation)
         return;
+
+    // Capture fitness values BEFORE evolution and reset
+    const auto &controllers = aiPopulation->getControllers();
+    std::vector<double> fitnessValues;
+    std::vector<int> checkpointValues;
+    std::vector<float> timeValues;
+
+    for (const auto &controller : controllers)
+    {
+        fitnessValues.push_back(controller->getFitness());
+        checkpointValues.push_back(controller->getCheckpointsHit());
+        timeValues.push_back(controller->getTimeAlive());
+    }
+
+    // Update the population's best fitness tracking before evolution
+    double currentBestFitness = 0.0;
+    for (double fitness : fitnessValues)
+    {
+        if (fitness > currentBestFitness)
+        {
+            currentBestFitness = fitness;
+        }
+    }
+
+    // Update the population's best fitness (this will be used by the UI)
+    aiPopulation->setBestFitness(currentBestFitness);
 
     // Evolve the population
     aiPopulation->evolve();
@@ -388,17 +429,46 @@ void Game::evolvePopulation()
     resetAICars();
 
     // Update best fitness tracking
-    double currentBestFitness = aiPopulation->getBestFitness();
-    if (currentBestFitness > 0) // Only update if we have valid fitness
+    double evolvedBestFitness = aiPopulation->getBestFitness();
+    if (evolvedBestFitness > 0) // Only update if we have valid fitness
     {
         bestFitnessGeneration = currentGeneration;
     }
 
     std::cout << "=== GENERATION " << currentGeneration << " COMPLETED ===" << std::endl;
-    std::cout << "Best Fitness: " << currentBestFitness << std::endl;
+    std::cout << "Best Fitness: " << evolvedBestFitness << std::endl;
     std::cout << "Generation Time: " << std::fixed << std::setprecision(1) << generationTime << "s" << std::endl;
+    std::cout << "Max Generation Time: " << std::fixed << std::setprecision(1) << calculateMaxGenerationTime() << "s" << std::endl;
     std::cout << "Species Count: " << aiPopulation->getSpeciesCount() << std::endl;
+
+    // Show fitness breakdown for the best car using captured values
+    if (!fitnessValues.empty())
+    {
+        auto bestIndex = std::max_element(fitnessValues.begin(), fitnessValues.end()) - fitnessValues.begin();
+        double bestFitness = fitnessValues[bestIndex];
+        int bestCheckpoints = checkpointValues[bestIndex];
+        float bestTime = timeValues[bestIndex];
+
+        std::cout << "Best Car - Checkpoints: " << bestCheckpoints
+                  << ", Time Alive: " << std::fixed << std::setprecision(1) << bestTime << "s"
+                  << ", Speed: " << std::fixed << std::setprecision(2) << (bestTime > 0.0f ? (bestCheckpoints / bestTime) : 0.0f) << " checkpoints/s" << std::endl;
+    }
+
+    // Output fitness for all cars using captured values
+    std::cout << "\n=== ALL CARS FITNESS ===" << std::endl;
+    for (size_t i = 0; i < fitnessValues.size(); ++i)
+    {
+        std::cout << "Car " << i << ": Fitness=" << std::fixed << std::setprecision(0) << fitnessValues[i]
+                  << ", Checkpoints=" << checkpointValues[i]
+                  << ", Time=" << std::fixed << std::setprecision(1) << timeValues[i] << "s"
+                  << ", Speed=" << std::fixed << std::setprecision(2) << (timeValues[i] > 0.0f ? (checkpointValues[i] / timeValues[i]) : 0.0f) << " c/s"
+                  << ", Alive=" << (timeValues[i] > 0.0f ? "Yes" : "No") << std::endl;
+    }
+
     std::cout << "Starting next generation..." << std::endl;
+
+    // Update network visualization after evolution
+    updateNetworkVisualization();
 }
 
 void Game::resetAICars()
@@ -461,23 +531,11 @@ void Game::updateAICars(float deltaTime)
         // Update fitness
         controller->updateFitness(deltaTime);
 
-        // Debug output for first few cars
-        if (i < 3 && controller->isCarAlive())
-        {
-            static int debugCounter = 0;
-            debugCounter++;
-            if (debugCounter % 60 == 0) // Every 60 frames (1 second at 60 FPS)
-            {
-                std::cout << "Car " << i << " - Fitness: " << controller->getFitness()
-                          << ", Checkpoints: " << currentCheckpoints
-                          << ", Time Alive: " << controller->getTimeAlive() << std::endl;
-            }
-        }
-
         // Check if car is stuck (but don't check for crashes again since we already did)
         if (checkCarStuck(*car))
         {
             controller->kill();
+            std::cout << "Car " << i << " killed for being stuck" << std::endl;
         }
     }
 
@@ -485,8 +543,14 @@ void Game::updateAICars(float deltaTime)
     generationTime += deltaTime;
 
     // Check if generation should end
-    if (generationTime >= maxGenerationTime || allAICarsFinished())
+    float currentMaxTime = calculateMaxGenerationTime();
+    bool timeExpired = generationTime >= currentMaxTime;
+    bool allFinished = allAICarsFinished();
+
+    if (timeExpired || allFinished)
     {
+        std::cout << "Generation ending - Time: " << std::fixed << std::setprecision(1) << generationTime
+                  << "s / " << currentMaxTime << "s, All Finished: " << (allFinished ? "Yes" : "No") << std::endl;
         evolvePopulation();
     }
 }

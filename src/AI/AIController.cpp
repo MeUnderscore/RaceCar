@@ -1,6 +1,8 @@
 #include "AIController.h"
 #include "../Car/car.h"
 #include <algorithm>
+#include <iostream> // Added for debug output
+#include <iomanip>  // Added for debug output
 
 AIController::AIController()
     : fitness(0.0), isAlive(true), checkpointsHit(0), timeAlive(0.0f)
@@ -62,9 +64,23 @@ void AIController::updateFitness(float deltaTime)
 
     timeAlive += deltaTime;
 
-    // Base fitness on time alive and checkpoints hit
-    // Fitness formula: time alive + checkpoint bonus
-    fitness = timeAlive + (checkpointsHit * 1000.0); // Each checkpoint worth 1000 time units
+    // Simple fitness formula: checkpoints hit is primary, time is secondary
+    // Formula: (checkpoints hit * 1000) + (checkpoints hit / time alive * 100)
+    // This makes checkpoints 10x more important than speed
+    if (timeAlive > 0.0f)
+    {
+        // Primary reward: checkpoints hit (most important)
+        double checkpointReward = (checkpointsHit * checkpointsHit) * 1000.0;
+
+        // Secondary reward: speed bonus (much smaller weight)
+        double speedBonus = ((checkpointsHit * checkpointsHit) / timeAlive) * 100.0;
+
+        fitness = checkpointReward + speedBonus;
+    }
+    else
+    {
+        fitness = 0.0;
+    }
 }
 
 void AIController::resetFitness()

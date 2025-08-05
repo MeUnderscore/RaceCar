@@ -26,11 +26,6 @@ void NetworkRender::setNetwork(const NeuralNetwork &network)
 
     // Update text
     updateValues(network);
-    
-    // Debug output
-    std::cout << "Network visualization updated: " << network.getNumInputs() 
-              << " inputs, " << network.getNumHidden() << " hidden, " 
-              << network.getNumOutputs() << " outputs" << std::endl;
 }
 
 void NetworkRender::updateValues(const NeuralNetwork &network)
