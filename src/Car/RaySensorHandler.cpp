@@ -4,26 +4,19 @@
 
 RaySensorHandler::RaySensorHandler()
 {
-    // Create 16 rays distributed with more density in the front (where the car is going)
-    // Front: 0° to 90° and 270° to 360° (more rays)
-    // Back: 90° to 270° (fewer rays)
+    // Create 8 rays distributed evenly around the car for better performance
+    // Front: 0°, 45°, 315°
+    // Sides: 90°, 270°
+    // Back: 135°, 180°, 225°
     float angles[] = {
         0.0f,   // Forward
-        15.0f,  // Forward-right
-        30.0f,  // Forward-right
         45.0f,  // Forward-right
-        60.0f,  // Right
         90.0f,  // Right
-        120.0f, // Right-back
-        150.0f, // Back-right
+        135.0f, // Back-right
         180.0f, // Backward
-        210.0f, // Back-Left
-        240.0f, // Back-left
-        270.0f, // Left-back
-        300.0f, // Left
-        315.0f, // Left-forward
-        330.0f, // Forward-left
-        345.0f  // Forward-left
+        225.0f, // Back-left
+        270.0f, // Left
+        315.0f  // Forward-left
     };
 
     for (int i = 0; i < NUM_RAYS; ++i)
@@ -31,6 +24,7 @@ RaySensorHandler::RaySensorHandler()
         raySensors.emplace_back(angles[i]);
     }
 
+    frameCounter = 0;
     // RaySensorHandler initialized silently
 }
 
@@ -46,18 +40,24 @@ void RaySensorHandler::checkCollisions(const sf::Vector2f &carPosition, float ca
                                        const std::vector<sf::Vector2f> &innerEdgePoints,
                                        const std::vector<sf::Vector2f> &outerEdgePoints)
 {
+    // Only check collisions every 3 frames for better performance
+    frameCounter++;
+    if (frameCounter % 3 != 0)
+    {
+        return;
+    }
+
     int redRays = 0;
 
     for (size_t i = 0; i < raySensors.size(); ++i)
     {
         auto &ray = raySensors[i];
 
-        // Binary search to find the optimal ray length
-        float minLength = 0.0f;
+        // Simplified collision detection for better performance
         float maxLength = ray.getMaxLength();
         float optimalLength = maxLength;
 
-        // Start with maximum length and check if it collides
+        // Check collision at max length first
         ray.setLength(maxLength);
         sf::Vector2f endPoint = ray.getEndPoint(carPosition, carRotation);
         bool maxLengthCollides = checkRayIntersectsEdges(carPosition, endPoint, innerEdgePoints) ||
@@ -65,34 +65,22 @@ void RaySensorHandler::checkCollisions(const sf::Vector2f &carPosition, float ca
 
         if (maxLengthCollides)
         {
-            // Ray collides at max length, use binary search to find the exact collision point
-            const float tolerance = 1.0f; // 1 pixel tolerance
+            // Use a simpler approach: check at 50% and 75% of max length
+            float testLengths[] = {maxLength * 0.5f, maxLength * 0.75f, maxLength};
 
-            while (maxLength - minLength > tolerance)
+            for (float testLength : testLengths)
             {
-                float midLength = (minLength + maxLength) / 2.0f;
-                ray.setLength(midLength);
+                ray.setLength(testLength);
                 endPoint = ray.getEndPoint(carPosition, carRotation);
+                bool collides = checkRayIntersectsEdges(carPosition, endPoint, innerEdgePoints) ||
+                                checkRayIntersectsEdges(carPosition, endPoint, outerEdgePoints);
 
-                bool midCollides = checkRayIntersectsEdges(carPosition, endPoint, innerEdgePoints) ||
-                                   checkRayIntersectsEdges(carPosition, endPoint, outerEdgePoints);
-
-                if (midCollides)
+                if (!collides)
                 {
-                    maxLength = midLength; // Collision found, search lower half
-                }
-                else
-                {
-                    minLength = midLength; // No collision, search upper half
+                    optimalLength = testLength;
+                    break;
                 }
             }
-
-            optimalLength = maxLength; // Use the length where collision occurs
-        }
-        else
-        {
-            // Ray doesn't collide at max length, keep it at max length
-            optimalLength = maxLength;
         }
 
         // Set the ray to the optimal length
@@ -114,8 +102,6 @@ void RaySensorHandler::checkCollisions(const sf::Vector2f &carPosition, float ca
             ray.setColor(sf::Color::Cyan);
         }
     }
-
-    // Debug output removed
 }
 
 bool RaySensorHandler::checkRayIntersectsEdges(const sf::Vector2f &rayStart, const sf::Vector2f &rayEnd,

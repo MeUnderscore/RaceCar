@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <random>
+#include <iostream> // Added for debug output
 
 // Static member initialization
 std::shared_ptr<InnovationTracker> NeuralNetwork::innovationTracker = nullptr;
@@ -29,65 +30,41 @@ void NeuralNetwork::initializeSimple(int numInputs, int numOutputs, int numHidde
     outputNodes.clear();
     hiddenNodes.clear();
 
+    // Random number generator for weight initialization
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+    static std::uniform_real_distribution<> weightDis(-1.0, 1.0);
+    static std::uniform_real_distribution<> biasDis(-0.5, 0.5);
+
     // Create input nodes
     for (int i = 0; i < numInputs; ++i)
     {
         int nodeId = i;
-        addNode(nodeId);
+        addNode(nodeId, biasDis(gen)); // Random bias
         inputNodes.push_back(nodeId);
     }
 
-    // Create hidden nodes
-    for (int i = 0; i < numHidden; ++i)
-    {
-        int nodeId = numInputs + i;
-        addNode(nodeId);
-        hiddenNodes.push_back(nodeId);
-    }
-
-    // Create output nodes
+    // Create output nodes (no hidden nodes initially)
     for (int i = 0; i < numOutputs; ++i)
     {
-        int nodeId = numInputs + numHidden + i;
-        addNode(nodeId);
+        int nodeId = numInputs + i;
+        addNode(nodeId, biasDis(gen)); // Random bias
         outputNodes.push_back(nodeId);
     }
 
-    // Create connections
-    if (numHidden == 0)
+    // Create direct connections from inputs to outputs (basic structure)
+    for (int input : inputNodes)
     {
-        // Direct connections from inputs to outputs
-        for (int input : inputNodes)
+        for (int output : outputNodes)
         {
-            for (int output : outputNodes)
-            {
-                addConnection(input, output, 0.1); // Add default weight
-            }
-        }
-    }
-    else
-    {
-        // Connections from inputs to hidden
-        for (int input : inputNodes)
-        {
-            for (int hidden : hiddenNodes)
-            {
-                addConnection(input, hidden, 0.1); // Add default weight
-            }
-        }
-
-        // Connections from hidden to outputs
-        for (int hidden : hiddenNodes)
-        {
-            for (int output : outputNodes)
-            {
-                addConnection(hidden, output, 0.1); // Add default weight
-            }
+            addConnection(input, output, weightDis(gen)); // Random weight
         }
     }
 
     // Set next node ID for future additions
     nextNodeId = nodes.size();
+
+    std::cout << "Initialized basic neural network: " << numInputs << " inputs -> " << numOutputs << " outputs (no hidden layers)" << std::endl;
 }
 
 std::vector<double> NeuralNetwork::process(const std::vector<double> &inputs)
@@ -294,6 +271,7 @@ void NeuralNetwork::mutateAddConnection()
             if (!connectionExists(fromNode, toNode))
             {
                 addConnection(fromNode, toNode, weightDis(gen));
+                std::cout << "Added connection: " << fromNode << " -> " << toNode << std::endl;
                 return;
             }
         }
@@ -320,6 +298,8 @@ void NeuralNetwork::mutateAddNode()
     int newNodeId = nextNodeId++;
     addNode(newNodeId);
     hiddenNodes.push_back(newNodeId);
+
+    std::cout << "Added hidden node: " << newNodeId << " (total hidden nodes: " << hiddenNodes.size() << ")" << std::endl;
 
     // Add connections to and from the new node with innovation tracking
     if (innovationTracker)

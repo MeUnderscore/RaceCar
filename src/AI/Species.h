@@ -21,6 +21,9 @@ public:
     // Add a member to this species
     void addMember(std::shared_ptr<NeuralNetwork> member);
     
+    // Clear all members
+    void clearMembers();
+    
     // Check if a network belongs to this species
     bool belongsToSpecies(const NeuralNetwork& network, double compatibilityThreshold) const;
     

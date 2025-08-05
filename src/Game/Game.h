@@ -14,6 +14,8 @@ class CheckpointHandler;
 class CheckpointUIRenderer;
 class UIManager;
 class NetworkRenderHandler;
+class Population;
+class AIController;
 
 class Game
 {
@@ -21,12 +23,21 @@ private:
     std::unique_ptr<sf::RenderWindow> window;
     std::unique_ptr<Background> background;
     std::unique_ptr<Track> track;
-    std::unique_ptr<Car> car;
     std::unique_ptr<TimerLogic> timerLogic;
     std::unique_ptr<TimerRenderer> timerRenderer;
     std::unique_ptr<CheckpointHandler> checkpointHandler;
     std::unique_ptr<CheckpointUIRenderer> checkpointUIRenderer;
     std::unique_ptr<UIManager> uiManager;
+
+    // AI Population management
+    std::unique_ptr<Population> aiPopulation;
+    std::vector<std::unique_ptr<Car>> aiCars;
+    bool aiLearningEnabled;
+    bool aiLearningPaused;
+    float generationTime;
+    float maxGenerationTime;
+    int currentGeneration;
+    int bestFitnessGeneration;
 
     // Performance monitoring
     sf::Clock performanceClock;
@@ -42,7 +53,6 @@ private:
     std::unique_ptr<NetworkRenderHandler> networkRenderHandler;
 
     // Game state
-    sf::Vector2f previousCarPosition;
     sf::Clock deltaClock;
 
 public:
@@ -59,7 +69,24 @@ public:
     bool isRunning() const;
     bool isLapCompleted() const;
 
+    // AI Learning methods
+    void startAILearning();
+    void pauseAILearning();
+    void stopAILearning();
+    void saveAITrainingData();
+    void loadAITrainingData();
+    void evolvePopulation();
+    void resetAICars();
+    void updateAICars(float deltaTime);
+    bool allAICarsFinished() const;
+    bool checkCarStuck(const Car& car) const;
+    bool checkCarCrashed(const Car& car) const;
+
 private:
     void updatePerformanceStats();
     void drawPerformanceStats();
+    void drawAIStats();
+    void initializeAIPopulation();
+    void createAICars();
+    void updateNetworkVisualization();
 }; 

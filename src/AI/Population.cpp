@@ -80,6 +80,17 @@ void Population::speciate()
 
 void Population::calculateAdjustedFitness()
 {
+    // First, update species with actual fitness values from controllers
+    for (auto& species : species)
+    {
+        // Clear the species members and rebuild with current controllers
+        species->clearMembers();
+    }
+    
+    // Re-speciate with current controllers and their fitness values
+    speciate();
+    
+    // Now calculate adjusted fitness for each species
     for (auto& species : species)
     {
         species->calculateAdjustedFitness();

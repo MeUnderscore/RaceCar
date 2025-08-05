@@ -148,6 +148,49 @@ sf::Vector2f Track::getStartPosition() const
     return sf::Vector2f(350.0f, 220.0f);
 }
 
+float Track::getStartRotation() const
+{
+    if (trackShapes.empty())
+        return 0.0f; // Default rotation if no track shapes
+    
+    // Get the tangent direction at the start of the first curve
+    sf::Vector2f startTangent = trackShapes.front().getStartTangent();
+    
+    // Convert tangent to rotation angle in degrees
+    float angle = std::atan2(startTangent.y, startTangent.x) * 180.0f / 3.14159f;
+    return angle;
+}
+
+sf::FloatRect Track::getTrackBounds() const
+{
+    if (trackShapes.empty())
+        return sf::FloatRect(sf::Vector2f(0.0f, 0.0f), sf::Vector2f(static_cast<float>(windowWidth), static_cast<float>(windowHeight)));
+    
+    // Calculate bounds by finding min/max coordinates of all track shapes
+    float minX = std::numeric_limits<float>::max();
+    float minY = std::numeric_limits<float>::max();
+    float maxX = std::numeric_limits<float>::lowest();
+    float maxY = std::numeric_limits<float>::lowest();
+    
+    for (const auto& shape : trackShapes)
+    {
+        // Get edge points from the shape
+        auto edgePoints = shape.getEdgePoints();
+        for (const auto& point : edgePoints)
+        {
+            minX = std::min(minX, point.x);
+            minY = std::min(minY, point.y);
+            maxX = std::max(maxX, point.x);
+            maxY = std::max(maxY, point.y);
+        }
+    }
+    
+    // Add some padding around the track
+    float padding = 50.0f;
+    return sf::FloatRect(sf::Vector2f(minX - padding, minY - padding), 
+                        sf::Vector2f((maxX - minX) + 2 * padding, (maxY - minY) + 2 * padding));
+}
+
 void Track::drawCheckeredFlag(sf::RenderWindow &window) const
 {
     if (trackShapes.empty())
@@ -218,10 +261,10 @@ sf::FloatRect Track::getCheckeredFlagBounds() const
     sf::Vector2f bottomRight = startPos + startTangent * (squareSize * 1.5f) + perpendicular * (flagWidth / 2.0f);
 
     // Calculate the bounding rectangle
-    float minX = std::min({topLeft.x, topRight.x, bottomLeft.x, bottomRight.x});
-    float maxX = std::max({topLeft.x, topRight.x, bottomLeft.x, bottomRight.x});
-    float minY = std::min({topLeft.y, topRight.y, bottomLeft.y, bottomRight.y});
-    float maxY = std::max({topLeft.y, topRight.y, bottomLeft.y, bottomRight.y});
+    float minX = std::min(std::min(topLeft.x, topRight.x), std::min(bottomLeft.x, bottomRight.x));
+    float maxX = std::max(std::max(topLeft.x, topRight.x), std::max(bottomLeft.x, bottomRight.x));
+    float minY = std::min(std::min(topLeft.y, topRight.y), std::min(bottomLeft.y, bottomRight.y));
+    float maxY = std::max(std::max(topLeft.y, topRight.y), std::max(bottomLeft.y, bottomRight.y));
 
     return sf::FloatRect(sf::Vector2f(minX, minY), sf::Vector2f(maxX - minX, maxY - minY));
 }

@@ -2,8 +2,9 @@
 #include <iostream>
 
 CheckpointHandler::CheckpointHandler()
-    : totalCheckpoints(0), hitCheckpoints(0), lapCompleted(false)
+    : totalCheckpoints(0), hitCheckpoints(0), lapCompleted(false), maxCars(1)
 {
+    carProgress.resize(1); // Start with one car
 }
 
 void CheckpointHandler::initializeCheckpoints(const std::vector<SegmentData> &segmentData)
@@ -90,7 +91,9 @@ void CheckpointHandler::checkCarPositionWithLine(const sf::Vector2f &previousPos
         {
             auto &checkpoint = checkpoints[hitCheckpoints + i];
 
-            if (!checkpoint->getIsHit() && checkpoint->isPointInside(samplePosition))
+            if (!checkpoint->getIsHit() &&
+                (checkpoint->isLineIntersecting(previousPosition, currentPosition) ||
+                 checkpoint->isPointInside(currentPosition)))
             {
                 checkpoint->markAsHit();
                 hitCheckpoints += i + 1;
@@ -201,4 +204,159 @@ const std::vector<std::unique_ptr<Checkpoint>> &CheckpointHandler::getCheckpoint
 const std::unique_ptr<Checkpoint> &CheckpointHandler::getFinalCheckpoint() const
 {
     return finalCheckpoint;
+}
+
+// Multi-car support methods
+
+void CheckpointHandler::setMaxCars(int maxCars)
+{
+    this->maxCars = maxCars;
+    carProgress.resize(maxCars);
+}
+
+void CheckpointHandler::checkCarPosition(int carId, const sf::Vector2f &carPosition)
+{
+    if (carId < 0 || carId >= maxCars)
+        return;
+
+    CarProgress &progress = carProgress[carId];
+    progress.lastPosition = carPosition;
+
+    // Check the next few checkpoints in sequence
+    int checkRange = 3;
+    bool checkpointHit = false;
+
+    for (int i = 0; i < checkRange && (progress.hitCheckpoints + i) < checkpoints.size(); ++i)
+    {
+        auto &checkpoint = checkpoints[progress.hitCheckpoints + i];
+
+        if (!checkpoint->getIsHit() && checkpoint->isPointInside(carPosition))
+        {
+            checkpoint->markAsHit();
+            progress.hitCheckpoints += i + 1;
+            checkpointHit = true;
+            break;
+        }
+    }
+
+    // Check final checkpoint only if all regular checkpoints are hit
+    if (progress.hitCheckpoints == totalCheckpoints && finalCheckpoint && !progress.lapCompleted)
+    {
+        if (finalCheckpoint->isPointInside(carPosition))
+        {
+            finalCheckpoint->markAsHit();
+            progress.lapCompleted = true;
+        }
+    }
+}
+
+void CheckpointHandler::checkCarPositionWithLine(int carId, const sf::Vector2f &previousPosition, const sf::Vector2f &currentPosition)
+{
+    if (carId < 0 || carId >= maxCars)
+        return;
+
+    CarProgress &progress = carProgress[carId];
+    progress.lastPosition = currentPosition;
+
+    // Calculate distance moved to determine sampling frequency
+    float distanceMoved = std::sqrt(
+        (currentPosition.x - previousPosition.x) * (currentPosition.x - previousPosition.x) +
+        (currentPosition.y - previousPosition.y) * (currentPosition.y - previousPosition.y));
+
+    // Sample multiple points along the movement path for fast-moving cars
+    int numSamples = std::max(1, static_cast<int>(distanceMoved / 10.0f)); // Sample every 10 pixels
+    numSamples = std::min(numSamples, 10);                                 // Cap at 10 samples to avoid performance issues
+
+    bool checkpointHit = false;
+
+    // Check each sample point along the movement path
+    for (int sample = 0; sample <= numSamples && !checkpointHit; ++sample)
+    {
+        // Calculate sample position along the movement path
+        float t = (numSamples > 0) ? static_cast<float>(sample) / static_cast<float>(numSamples) : 0.0f;
+        sf::Vector2f samplePosition = previousPosition + t * (currentPosition - previousPosition);
+
+        // Check the next checkpoint in sequence
+        if (progress.hitCheckpoints < checkpoints.size())
+        {
+            auto &checkpoint = checkpoints[progress.hitCheckpoints];
+
+            if (checkpoint->isPointInside(samplePosition))
+            {
+                checkpoint->markAsHit();
+                progress.hitCheckpoints++;
+                checkpointHit = true;
+
+                // Debug output
+                std::cout << "Car " << carId << " hit checkpoint " << (progress.hitCheckpoints - 1)
+                          << " (total: " << progress.hitCheckpoints << "/" << totalCheckpoints << ")" << std::endl;
+            }
+        }
+    }
+
+    // Check final checkpoint only if all regular checkpoints are hit
+    if (progress.hitCheckpoints == totalCheckpoints && finalCheckpoint && !progress.lapCompleted)
+    {
+        if (finalCheckpoint->isLineIntersecting(previousPosition, currentPosition) ||
+            finalCheckpoint->isPointInside(currentPosition))
+        {
+            finalCheckpoint->markAsHit();
+            progress.lapCompleted = true;
+            std::cout << "Car " << carId << " completed lap!" << std::endl;
+        }
+    }
+}
+
+int CheckpointHandler::getHitCheckpoints(int carId) const
+{
+    if (carId < 0 || carId >= maxCars)
+        return 0;
+    return carProgress[carId].hitCheckpoints;
+}
+
+bool CheckpointHandler::isLapCompleted(int carId) const
+{
+    if (carId < 0 || carId >= maxCars)
+        return false;
+    return carProgress[carId].lapCompleted;
+}
+
+float CheckpointHandler::getProgressForCar(int carId) const
+{
+    if (carId < 0 || carId >= maxCars || totalCheckpoints == 0)
+        return 0.0f;
+
+    const CarProgress &progress = carProgress[carId];
+    return static_cast<float>(progress.hitCheckpoints) / static_cast<float>(totalCheckpoints);
+}
+
+void CheckpointHandler::resetCarProgress(int carId)
+{
+    if (carId < 0 || carId >= maxCars)
+        return;
+
+    carProgress[carId].hitCheckpoints = 0;
+    carProgress[carId].lapCompleted = false;
+    carProgress[carId].lastPosition = sf::Vector2f(0.0f, 0.0f);
+}
+
+void CheckpointHandler::resetAllCarProgress()
+{
+    for (auto &progress : carProgress)
+    {
+        progress.hitCheckpoints = 0;
+        progress.lapCompleted = false;
+        progress.lastPosition = sf::Vector2f(0.0f, 0.0f);
+    }
+
+    // Also reset all checkpoints
+    for (auto &checkpoint : checkpoints)
+    {
+        checkpoint->reset();
+    }
+
+    if (finalCheckpoint)
+    {
+        finalCheckpoint->reset();
+    }
 }

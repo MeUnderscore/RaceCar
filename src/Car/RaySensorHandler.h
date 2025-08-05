@@ -7,7 +7,8 @@ class RaySensorHandler
 {
 private:
     std::vector<RaySensor> raySensors;
-    static const int NUM_RAYS = 16;
+    static const int NUM_RAYS = 8; // Reduced from 16 to 8 for better performance
+    int frameCounter;              // For reducing collision check frequency
 
 public:
     RaySensorHandler();

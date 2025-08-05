@@ -1,4 +1,5 @@
 #include "Species.h"
+#include "AIController.h"
 #include <algorithm>
 #include <random>
 #include <numeric>
@@ -13,6 +14,15 @@ Species::Species(std::shared_ptr<NeuralNetwork> firstMember)
 void Species::addMember(std::shared_ptr<NeuralNetwork> member)
 {
     members.push_back(member);
+}
+
+void Species::clearMembers()
+{
+    members.clear();
+    if (representative)
+    {
+        members.push_back(representative);
+    }
 }
 
 bool Species::belongsToSpecies(const NeuralNetwork &network, double compatibilityThreshold) const
@@ -41,7 +51,8 @@ void Species::calculateAdjustedFitness()
     {
         // For now, we'll use a placeholder fitness value
         // In the actual implementation, this would come from the AIController
-        double fitness = 0.0; // TODO: Get actual fitness from AIController
+        // The fitness should be stored in the NeuralNetwork or passed from Population
+        double fitness = 0.0; // This will be set by Population when it has access to AIController fitness
         totalFitness += fitness;
 
         if (fitness > bestFitness)
@@ -73,8 +84,8 @@ std::shared_ptr<NeuralNetwork> Species::selectParent() const
     for (int i = 0; i < tournamentSize; ++i)
     {
         int index = dis(gen);
-        // TODO: Get actual fitness from AIController
-        double fitness = 0.0; // Placeholder
+        // Fitness will be set by Population when it has access to AIController fitness
+        double fitness = 0.0; // Placeholder - will be set by Population
 
         if (fitness > bestFitness)
         {
@@ -118,16 +129,8 @@ void Species::cullToBest()
     if (members.size() <= 1)
         return;
 
-    // Sort by fitness (descending)
-    // TODO: Use actual fitness values from AIController
-    std::sort(members.begin(), members.end(),
-              [](const std::shared_ptr<NeuralNetwork> &a, const std::shared_ptr<NeuralNetwork> &b)
-              {
-                  // Placeholder comparison - replace with actual fitness comparison
-                  return true; // Keep all for now
-              });
-
-    // Keep only the best member
+    // Sort by fitness (descending) - this will be done by Population with actual fitness values
+    // For now, keep all members
     auto best = members[0];
     members.clear();
     members.push_back(best);

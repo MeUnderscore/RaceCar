@@ -32,6 +32,12 @@ public:
     // Get the start position for the car (checkered flag position)
     sf::Vector2f getStartPosition() const;
 
+    // Get the start rotation for the car (direction of the track at start)
+    float getStartRotation() const;
+
+    // Get track bounds for collision detection
+    sf::FloatRect getTrackBounds() const;
+
     // Draw the checkered flag at the start line
     void drawCheckeredFlag(sf::RenderWindow &window) const;
 

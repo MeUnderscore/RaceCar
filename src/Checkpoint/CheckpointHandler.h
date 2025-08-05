@@ -18,6 +18,19 @@ private:
     int hitCheckpoints;
     bool lapCompleted;
 
+    // Multi-car support
+    struct CarProgress
+    {
+        int hitCheckpoints;
+        bool lapCompleted;
+        sf::Vector2f lastPosition;
+        
+        CarProgress() : hitCheckpoints(0), lapCompleted(false), lastPosition(0.0f, 0.0f) {}
+    };
+    
+    std::vector<CarProgress> carProgress;
+    int maxCars;
+
 public:
     CheckpointHandler();
     ~CheckpointHandler();
@@ -49,4 +62,14 @@ public:
     // Get all checkpoints for external rendering
     const std::vector<std::unique_ptr<Checkpoint>>& getCheckpoints() const;
     const std::unique_ptr<Checkpoint>& getFinalCheckpoint() const;
+
+    // Multi-car support methods
+    void setMaxCars(int maxCars);
+    void checkCarPosition(int carId, const sf::Vector2f &carPosition);
+    void checkCarPositionWithLine(int carId, const sf::Vector2f &previousPosition, const sf::Vector2f &currentPosition);
+    int getHitCheckpoints(int carId) const;
+    bool isLapCompleted(int carId) const;
+    float getProgressForCar(int carId) const;
+    void resetCarProgress(int carId);
+    void resetAllCarProgress();
 };

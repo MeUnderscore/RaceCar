@@ -63,6 +63,7 @@ void AIController::updateFitness(float deltaTime)
     timeAlive += deltaTime;
 
     // Base fitness on time alive and checkpoints hit
+    // Fitness formula: time alive + checkpoint bonus
     fitness = timeAlive + (checkpointsHit * 1000.0); // Each checkpoint worth 1000 time units
 }
 

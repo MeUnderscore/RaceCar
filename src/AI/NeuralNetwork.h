@@ -61,6 +61,7 @@ public:
     // Getters
     int getNumInputs() const { return inputNodes.size(); }
     int getNumOutputs() const { return outputNodes.size(); }
+    int getNumHidden() const { return hiddenNodes.size(); }
 
 private:
     void addNode(int nodeId, double bias = 0.0);

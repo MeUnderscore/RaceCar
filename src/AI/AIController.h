@@ -37,6 +37,8 @@ public:
     // Checkpoint tracking
     void onCheckpointHit() { checkpointsHit++; }
     int getCheckpointsHit() const { return checkpointsHit; }
+    void setCheckpointsHit(int count) { checkpointsHit = count; }
+    float getTimeAlive() const { return timeAlive; }
 
     // Genetic operations
     void mutate() { brain.mutate(); }

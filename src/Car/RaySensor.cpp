@@ -2,10 +2,10 @@
 #include <cmath>
 
 RaySensor::RaySensor(float angle)
-    : angle(angle), currentLength(200.0f), maxLength(200.0f)
+    : angle(angle), currentLength(150.0f), maxLength(150.0f)
 {
-    // Create a thin rectangle for the ray with initial length of 200
-    shape.setSize(sf::Vector2f(currentLength, 2.0f)); // 200 pixels long, 2 pixels wide
+    // Create a thin rectangle for the ray with initial length of 150
+    shape.setSize(sf::Vector2f(currentLength, 2.0f)); // 150 pixels long, 2 pixels wide
     shape.setOrigin(sf::Vector2f(0.0f, 1.0f));        // Origin at left center
     shape.setFillColor(sf::Color::Cyan);
 }
