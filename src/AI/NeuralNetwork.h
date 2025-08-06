@@ -62,6 +62,7 @@ public:
     int getNumInputs() const { return inputNodes.size(); }
     int getNumOutputs() const { return outputNodes.size(); }
     int getNumHidden() const { return hiddenNodes.size(); }
+    const std::vector<Connection>& getConnections() const { return connections; }
 
 private:
     void addNode(int nodeId, double bias = 0.0);

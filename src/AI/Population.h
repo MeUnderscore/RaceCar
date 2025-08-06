@@ -33,6 +33,8 @@ public:
     // Evolution methods
     void evolve();
     void speciate();
+    void speciateWithThreshold(double threshold);
+    void mergeSmallSpecies();
     void calculateAdjustedFitness();
     void removeStaleSpecies();
     void reproduce();
@@ -50,6 +52,7 @@ public:
     int getPopulationSize() const { return populationSize; }
     const std::vector<std::shared_ptr<AIController>>& getControllers() const { return controllers; }
     std::vector<std::shared_ptr<AIController>>& getControllers() { return controllers; }
+    std::shared_ptr<AIController> getBestController() const;
     
     // Setters
     void setCompatibilityThreshold(double threshold) { compatibilityThreshold = threshold; }

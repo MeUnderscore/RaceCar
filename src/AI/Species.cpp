@@ -52,20 +52,48 @@ void Species::calculateAdjustedFitness(const std::vector<std::shared_ptr<AIContr
     {
         // Find the corresponding controller for this neural network
         double fitness = 0.0;
+        bool found = false;
+
         for (const auto &controller : controllers)
         {
-            if (controller->getBrain().calculateDistance(*member) < 0.1) // Small threshold for matching
+            // Use a more reliable matching method - check if the neural network is the same object
+            if (controller->getBrain().getConnections().size() == member->getConnections().size())
             {
-                fitness = controller->getFitness();
-                break;
+                // Check if all connections match (same innovation numbers and weights)
+                bool networksMatch = true;
+                const auto &controllerConnections = controller->getBrain().getConnections();
+                const auto &memberConnections = member->getConnections();
+
+                if (controllerConnections.size() == memberConnections.size())
+                {
+                    for (size_t i = 0; i < controllerConnections.size(); ++i)
+                    {
+                        if (controllerConnections[i].innovationNumber != memberConnections[i].innovationNumber ||
+                            std::abs(controllerConnections[i].weight - memberConnections[i].weight) > 0.001)
+                        {
+                            networksMatch = false;
+                            break;
+                        }
+                    }
+
+                    if (networksMatch)
+                    {
+                        fitness = controller->getFitness();
+                        found = true;
+                        break;
+                    }
+                }
             }
         }
 
-        totalFitness += fitness;
-        validMembers++;
+        if (found)
+        {
+            totalFitness += fitness;
+            validMembers++;
 
-        if (fitness > bestFitness)
-            bestFitness = fitness;
+            if (fitness > bestFitness)
+                bestFitness = fitness;
+        }
     }
 
     averageFitness = validMembers > 0 ? totalFitness / validMembers : 0.0;
@@ -96,16 +124,40 @@ std::shared_ptr<NeuralNetwork> Species::selectParent(const std::vector<std::shar
 
         // Find the corresponding controller for this neural network
         double fitness = 0.0;
+        bool found = false;
+
         for (const auto &controller : controllers)
         {
-            if (controller->getBrain().calculateDistance(*members[index]) < 0.1) // Small threshold for matching
+            // Use the same reliable matching method
+            if (controller->getBrain().getConnections().size() == members[index]->getConnections().size())
             {
-                fitness = controller->getFitness();
-                break;
+                bool networksMatch = true;
+                const auto &controllerConnections = controller->getBrain().getConnections();
+                const auto &memberConnections = members[index]->getConnections();
+
+                if (controllerConnections.size() == memberConnections.size())
+                {
+                    for (size_t j = 0; j < controllerConnections.size(); ++j)
+                    {
+                        if (controllerConnections[j].innovationNumber != memberConnections[j].innovationNumber ||
+                            std::abs(controllerConnections[j].weight - memberConnections[j].weight) > 0.001)
+                        {
+                            networksMatch = false;
+                            break;
+                        }
+                    }
+
+                    if (networksMatch)
+                    {
+                        fitness = controller->getFitness();
+                        found = true;
+                        break;
+                    }
+                }
             }
         }
 
-        if (fitness > bestFitness)
+        if (found && fitness > bestFitness)
         {
             bestFitness = fitness;
             best = members[index];
@@ -147,8 +199,7 @@ void Species::cullToBest()
     if (members.size() <= 1)
         return;
 
-    // Sort by fitness (descending) - this will be done by Population with actual fitness values
-    // For now, keep all members
+    // Keep only the best member as representative (standard NEAT approach)
     auto best = members[0];
     members.clear();
     members.push_back(best);
