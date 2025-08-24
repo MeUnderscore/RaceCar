@@ -1,1 +1,5 @@
-Nothing Yet ;)
+- This is a project to help me get better at c++ and AI algorithms. 
+- The program uses SFML to create a race track and a car that can be driven. 
+- The program then uses a NEAT algorithm to train a model to drive around the track as fast as possible. 
+- The program is not done yet. I am still working on debugging the NEAT algorithm to improve its learning. 
+- This program was written in Cursor with the help of its AI tools
